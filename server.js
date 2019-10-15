@@ -22,15 +22,11 @@ const server = http.createServer(app)
 
 const io = socketIO(server)
 
-io.on('message', socket => {
-  console.log('User connected')
+io.on('init', socket => {
+  console.log('app init')
 
   socket.on('message', (message) => {
     console.log('message', message)
-  })
-  
-  socket.on('disconnect', () => {
-    console.log('user disconnected')
   })
 })
 
