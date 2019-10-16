@@ -17,6 +17,16 @@ const createChannel = async name => {
   }
 };
 
+const getChannels = async () => {
+  try {
+    const channelList = await pool.query(`SELECT * from channel`);
+    return channelList.rows;
+  } catch (error) {
+    console.log('error: ', error);
+  }
+};
+
 module.exports = {
   createChannel,
+  getChannels,
 };
