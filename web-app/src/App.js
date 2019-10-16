@@ -2,7 +2,9 @@ import React from 'react';
 import './App.css';
 import socketIOClient from 'socket.io-client';
 
-const endpoint = 'http://localhost:3001/api/message';
+require('dotenv').config();
+
+const endpoint = `${process.env.REACT_APP_API_BASE_URL}/api/message`;
 const socket = socketIOClient(endpoint);
 
 class App extends React.Component {
