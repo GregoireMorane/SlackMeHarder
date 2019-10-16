@@ -2,18 +2,19 @@ import React from 'react';
 import './App.css';
 import socketIOClient from 'socket.io-client';
 
+const endpoint = 'http://localhost:3001/api/message';
+const socket = socketIOClient(endpoint);
 
 class App extends React.Component {
-
   componentDidMount = () => {
-    const socket = socketIOClient('/api/message');
-    socket.emit('change color', this.state.color)
-  }
+    console.log(endpoint);
+    socket.emit('connection');
+  };
 
   testSocket = () => {
-
-
-  }
+    console.log('clicked');
+    socket.emit('message', 'test front');
+  };
   render() {
     return (
       <div className="App">
