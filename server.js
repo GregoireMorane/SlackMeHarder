@@ -6,6 +6,8 @@ const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const routerChannels = require('./api/routes/channels');
+const routerMessages = require('./api/routes/messages');
+
 
 const port = process.env.PORT;
 
@@ -19,6 +21,8 @@ app.use(
 );
 
 app.use('/api/channels', routerChannels);
+app.use('/api/messages', routerMessages);
+
 
 const server = http.createServer(app);
 const io = socketIO(server);
