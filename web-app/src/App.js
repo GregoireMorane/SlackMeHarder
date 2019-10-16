@@ -2,8 +2,8 @@ import React from 'react';
 import './App.css';
 import socketIOClient from 'socket.io-client';
 
-const endpoint = '/api/message';
-const socket = socketIOClient('', { path: endpoint });
+const endpoint = 'http://localhost:3001/api/message';
+const socket = socketIOClient(endpoint);
 
 class App extends React.Component {
   componentDidMount = () => {
