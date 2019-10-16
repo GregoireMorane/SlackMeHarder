@@ -5,7 +5,18 @@ require('dotenv').config({ path: path.join(__dirname, '../.env') });
 
 const databaseUrl = process.env.DATABASE_URL;
 
-
 const pool = new pg.Pool({
   connectionString: databaseUrl,
 });
+
+const createChannel = async name => {
+  try {
+    await pool.query(`INSERT INTO channel ("name") VALUES ($1)`, [name]);
+  } catch (error) {
+    console.log('error: ', error);
+  }
+};
+
+module.exports = {
+  createChannel,
+};
