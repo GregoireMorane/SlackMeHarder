@@ -1,7 +1,6 @@
 const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
-const cors = require('cors');
 const bodyParser = require('body-parser');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
@@ -16,19 +15,24 @@ app.use(
     extended: true,
   })
 );
-app.use(cors());
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 
-const io = socketIO(server)
+const io = socketIO(server);
 
-io.on('init', socket => {
-  console.log('app init')
+app.io = io;
 
-  socket.on('message', (message) => {
-    console.log('message', message)
-  })
-})
+io.of('/api/message').on('connection', socket => {
+  console.log('user connected');
+
+  socket.on('message', data => {
+    console.log('message : ', data);
+  });
+
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+});
 
 server.listen(port, function() {
   console.log(`Example app listening on port ${port}!`);
