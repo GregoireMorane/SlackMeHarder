@@ -11,7 +11,14 @@ const getChannels = async (req, res) => {
   res.send(200, channelsList);
 };
 
+getMessageByChannel = async (req, res) => {
+  const id =req.params.id
+  const messagesList = await dataLayer.getMessageByChannel(id);
+  res.send(200, messagesList);
+};
+
 module.exports = {
   createChannel,
   getChannels,
+  getMessageByChannel
 };

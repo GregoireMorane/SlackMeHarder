@@ -37,8 +37,18 @@ const storeMessage = async (content, channelId) => {
   }
 };
 
+const getMessageByChannel = async id => {
+  try {
+    const messagesList = await pool.query(` SELECT * from message WHERE channel_id = $1`, [id]);
+    return messagesList.rows;
+  } catch (error) {
+    console.log('error: ', error);
+  }
+};
+
 module.exports = {
   createChannel,
   getChannels,
   storeMessage,
+  getMessageByChannel,
 };
