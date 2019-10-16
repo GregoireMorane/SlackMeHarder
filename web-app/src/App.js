@@ -1,12 +1,14 @@
 import React from 'react';
 import './App.css';
 import socketIOClient from 'socket.io-client';
+require('dotenv').config();
 
-const endpoint = 'http://localhost:3001/api/message';
+const endpoint = `${process.env.REACT_APP_API_BASE_URL}/api/message`;
 const socket = socketIOClient(endpoint);
 
 class App extends React.Component {
   componentDidMount = () => {
+    console.log(process.env);
     console.log(endpoint);
     socket.emit('connection');
   };
