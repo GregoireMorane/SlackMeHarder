@@ -8,8 +8,6 @@ const socket = socketIOClient(endpoint);
 
 class App extends React.Component {
   componentDidMount = () => {
-    console.log(process.env);
-    console.log(endpoint);
     socket.emit('connection');
   };
 
