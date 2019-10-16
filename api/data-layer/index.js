@@ -11,12 +11,24 @@ const pool = new pg.Pool({
 
 const createChannel = async name => {
   try {
-    await pool.query(`INSERT INTO channel ("name") VALUES ($1)`, [name]);
+    await pool.query(`INSERT INTO channel (name) VALUES ($1)`, [name]);
   } catch (error) {
     console.log('error: ', error);
   }
 };
 
+const storeMessage = async (content, channelId) => {
+  try {
+    await pool.query(
+      `INSERT INTO message (content,channel_id) VALUES ($1, $2)`,
+      [content, channelId]
+    );
+  } catch (error) {
+    console.log('error : ', error);
+  }
+};
+
 module.exports = {
   createChannel,
+  storeMessage,
 };
