@@ -2,8 +2,8 @@ const dataLayer = require('../data-layer');
 
 const storeMessage = async (req, res) => {
   const content = req.body.content;
-  const channeId = req.body.channelId;
-  await dataLayer.storeMessage(content, channeId);
+  const channelId = req.body.channel_id;
+  await dataLayer.storeMessage(content, channelId);
   res.send(201, 'message created');
 };
 

@@ -2,17 +2,18 @@ const express = require('express');
 const socketIO = require('socket.io');
 const http = require('http');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const routerChannels = require('./api/routes/channels');
 const routerMessages = require('./api/routes/messages');
 
-
 const port = process.env.PORT;
 
 const app = express();
 
+app.use(cors());
 app.use(bodyParser.json());
 app.use(
   bodyParser.urlencoded({
@@ -22,7 +23,6 @@ app.use(
 
 app.use('/api/channels', routerChannels);
 app.use('/api/messages', routerMessages);
-
 
 const server = http.createServer(app);
 const io = socketIO(server);
