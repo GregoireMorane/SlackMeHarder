@@ -28,10 +28,11 @@ const getChannels = async () => {
 
 const storeMessage = async (content, channelId) => {
   try {
-    await pool.query(
-      `INSERT INTO message (content,channel_id) VALUES ($1, $2)`,
+    const message = await pool.query(
+      `INSERT INTO message (content,channel_id) VALUES ($1, $2) RETURNING *`,
       [content, channelId]
     );
+    return message.rows[0];
   } catch (error) {
     console.log('error : ', error);
   }
