@@ -10,7 +10,6 @@
   flex: 2;
   background-color: #2f3e4d;
   text-align: left;
-  padding: 20px;
 }
 
 .container__channels__containerTitle {
@@ -18,6 +17,7 @@
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 15px;
 }
 
 .container__channels__title {
@@ -48,12 +48,45 @@
   padding-left: 0;
 }
 
-.container__channels__list__label {
-  font-size: 16px;
+.container__channels__list__element {
+  font-size: 15px;
   text-decoration: none;
   color: white;
 }
 
-.container__channels__list__label:visited {
+.container__channels__list__element:visited {
   color: white;
+}
+
+.container__channels__list__label {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  padding-left: 10px;
+}
+
+.container__channels__list__label:hover {
+  background-color: rgba(131, 127, 127, 0.637);
+}
+
+.container__modalCreateChannel {
+  position: fixed;
+  z-index: 99999;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.46);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container__modalCreateChannel__contentContainer {
+  width: 400px;
+  height: 80px;
+  background: #2f3e4d;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

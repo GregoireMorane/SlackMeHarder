@@ -1,28 +1,40 @@
 import { useState, useEffect } from 'react';
-import { fetchChannels } from '../../data/services/api';
+import { fetchChannels, createChannel } from '../../data/services/api';
 
 export const useChannels = () => {
   const [channels, setChannels] = useState([]);
+
   const [
     shouldPromptModalCreateChannel,
     setShouldPromptModalCreateChannel,
   ] = useState(false);
 
-  useEffect(() => {
-    const _fetchChannels = async () => {
-      setChannels(await fetchChannels());
-    };
+  const [currentNewChannelName, setCurrentNewChannelName] = useState('');
 
+  useEffect(() => {
     _fetchChannels();
   }, []);
 
+  const _fetchChannels = async () => {
+    setChannels(await fetchChannels());
+  };
+
   const sShouldPromptModalCreateChannel = () => {
-    setShouldPromptModalCreateChannel(true);
+    setShouldPromptModalCreateChannel(!shouldPromptModalCreateChannel);
+  };
+
+  const createNewChannel = async () => {
+    await createChannel(currentNewChannelName);
+    setShouldPromptModalCreateChannel(!shouldPromptModalCreateChannel);
+    await _fetchChannels();
   };
 
   return [
     channels,
     shouldPromptModalCreateChannel,
     sShouldPromptModalCreateChannel,
+    createNewChannel,
+    currentNewChannelName,
+    setCurrentNewChannelName,
   ];
 };

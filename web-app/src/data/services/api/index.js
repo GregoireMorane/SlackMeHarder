@@ -10,9 +10,11 @@ export const fetchChannels = async () => {
   return channels;
 };
 
-// export const createChannels = async () => {
-//   await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/channels`);
-// };
+export const createChannel = async name => {
+  await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/channels`, {
+    name,
+  });
+};
 
 // Messages
 
