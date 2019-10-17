@@ -1,13 +1,13 @@
 .container__chat {
   display: flex;
   flex-direction: column;
-  flex: 8;
-  background-color: green;
+  flex: 9;
 }
 
 .container__chat--messages {
   flex: 9;
-  background-color: pink;
+  background-color: #191d20;
+  color: white;
 }
 
 .container__chat--sendBox {

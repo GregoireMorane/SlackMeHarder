@@ -7,20 +7,42 @@ import ChatBox from '../ChatBox';
 import './styles.css';
 
 function Home() {
-  const channels = useChannels();
+  const [
+    channels,
+    shouldPromptModalCreateChannel,
+    sShouldPromptModalCreateChannel,
+  ] = useChannels();
   return (
     <div className="container">
       <div className="container__channels">
-        <p>channels</p>
-        <ul>
+        <div className="container__channels__containerTitle">
+          <p className="container__channels__title">channels</p>
+          <button
+            onClick={sShouldPromptModalCreateChannel}
+            className="container__channels__button"
+          >
+            <span className="container__channels__button__icon">+</span>
+          </button>
+        </div>
+        <ul className="container__channels__list">
           {channels.map(channel => (
             <li key={channel.name}>
-              <Link to={`/channel/${channel.id}`}>{channel.name}</Link>
+              <Link
+                to={`/channel/${channel.id}`}
+                className="container__channels__list__label"
+              >
+                # {channel.name}
+              </Link>
             </li>
           ))}
         </ul>
       </div>
       <ChatBox />
+      {shouldPromptModalCreateChannel === true ? (
+        <div className="container__modalCreateChannel">
+          <input placeholder="Nom du channel" />
+        </div>
+      ) : null}
     </div>
   );
 }

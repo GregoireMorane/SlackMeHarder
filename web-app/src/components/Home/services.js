@@ -3,6 +3,10 @@ import { fetchChannels } from '../../data/services/api';
 
 export const useChannels = () => {
   const [channels, setChannels] = useState([]);
+  const [
+    shouldPromptModalCreateChannel,
+    setShouldPromptModalCreateChannel,
+  ] = useState(false);
 
   useEffect(() => {
     const _fetchChannels = async () => {
@@ -12,5 +16,13 @@ export const useChannels = () => {
     _fetchChannels();
   }, []);
 
-  return channels;
+  const sShouldPromptModalCreateChannel = () => {
+    setShouldPromptModalCreateChannel(true);
+  };
+
+  return [
+    channels,
+    shouldPromptModalCreateChannel,
+    sShouldPromptModalCreateChannel,
+  ];
 };
