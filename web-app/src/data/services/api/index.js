@@ -23,3 +23,10 @@ export const fetchMessages = async id => {
   const messages = response.data;
   return messages;
 };
+
+export const postMessages = async (content, channel_id) => {
+  const data = {content, channel_id}
+  const response = await axios.post(`${process.env.REACT_APP_API_BASE_URL}/api/messages`, data)
+  const message = response.data;
+  return message;
+}
