@@ -4,13 +4,13 @@
   flex: 9;
 }
 
-.container__chat--messages {
+.container__chat__messages {
   flex: 9;
   background-color: #191d20;
   color: white;
 }
 
-.container__chat--sendBox {
+.container__chat__sendBox {
   flex: 1;
   background-color: cyan;
 }
