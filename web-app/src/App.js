@@ -1,24 +1,21 @@
 import React from 'react';
 import './App.css';
-import socketIOClient from 'socket.io-client';
-require('dotenv').config();
+import { Switch, Route } from 'react-router-dom';
 
-const endpoint = `${process.env.REACT_APP_API_BASE_URL}/api/message`;
-const socket = socketIOClient(endpoint);
+import Home from './components/Home';
+
+require('dotenv').config();
+// import socketIOClient from 'socket.io-client';
+// const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
+// const socket = socketIOClient(endpoint);
 
 class App extends React.Component {
-  componentDidMount = () => {
-    socket.emit('connection');
-  };
-
-  testSocket = () => {
-    console.log('clicked');
-    socket.emit('message', 'test front');
-  };
   render() {
     return (
       <div className="App">
-        <button onClick={this.testSocket}></button>
+        <Switch>
+          <Route exact path="/" component={Home} />
+        </Switch>
       </div>
     );
   }
