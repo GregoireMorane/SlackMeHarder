@@ -5,25 +5,10 @@
   align-items: 'center';
   justify-content: 'center';
   height: 100vh;
+  text-align: center;
 }
 
 .container__channels {
   flex: 2;
-  background-color: blue;
-}
-
-.container__chat {
-  display: flex;
-  flex-direction: column;
-  flex: 8;
-}
-
-.container__chat--messages {
-  flex: 9;
-  background-color: pink;
-}
-
-.container__chat--sendBox {
-  flex: 1;
-  background-color: cyan;
+  background-color: rgb(255, 174, 0);
 }
