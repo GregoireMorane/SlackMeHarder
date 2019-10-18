@@ -14,9 +14,7 @@ export const useMessages = id => {
     const message = await postMessages(contentValue, id);
 
     socket.emit('getMessageFromClient', contentValue);
-    socket.on('sendMessagesToclient', data => {
-      console.log('message from server', data);
-    });
+
     await _fetchMessages(id);
     // run again the fetch to be sure that the message has been created
     await addMessage(message);
@@ -34,6 +32,10 @@ export const useMessages = id => {
   useEffect(() => {
     _fetchMessages(id);
   }, [id]);
+
+  socket.on('sendMessagesToclient', data => {
+    console.log('message from server', data);
+  });
 
   return [messages, createMessage, contentValue, setContentValue];
 };
