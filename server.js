@@ -27,18 +27,19 @@ app.use('/api/messages', routerMessages);
 const server = http.createServer(app);
 const io = socketIO(server);
 
-// app.io = io;
-// io.of('/api/message').on('connection', socket => {
-//   console.log('user connected');
+app.io = io;
+io.on('connection', socket => {
+  console.log('user connected');
 
-//   socket.on('message', data => {
-//     console.log('message : ', data);
-//   });
+  socket.on('getMessageFromClient', data => {
+    socket.emit('sendMessagesToclient', data);
+    console.log('message : ', data);
+  });
 
-//   socket.on('disconnect', function() {
-//     console.log('user disconnected');
-//   });
-// });
+  socket.on('disconnect', function() {
+    console.log('user disconnected');
+  });
+});
 
 server.listen(port, function() {
   console.log(`Example app listening on port ${port}!`);

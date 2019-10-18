@@ -82,11 +82,22 @@
 }
 
 .container__modalCreateChannel__contentContainer {
-  width: 400px;
-  height: 80px;
-  background: #2f3e4d;
-  border-radius: 10px;
+  width: 500px;
+  height: 600px;
+  background: #191d20;
+  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-direction: column;
+}
+
+.container__modalCreateChannel__contentContainer__Header {
+}
+
+.container__modalCreateChannel__contentContainer__Header__title {
+  color: white;
+}
+
+.container__modalCreateChannel__contentContainer__form {
 }

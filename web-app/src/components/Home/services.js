@@ -1,7 +1,13 @@
 import { useState, useEffect } from 'react';
+import socketIOClient from 'socket.io-client';
+
 import { fetchChannels, createChannel } from '../../data/services/api';
 
 export const useChannels = () => {
+  const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
+  const socket = socketIOClient(endpoint);
+  socket.on('connection');
+
   const [channels, setChannels] = useState([]);
 
   const [

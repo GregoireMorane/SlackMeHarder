@@ -55,7 +55,16 @@ function Home() {
       {shouldPromptModalCreateChannel === true ? (
         <div className="container__modalCreateChannel">
           <div className="container__modalCreateChannel__contentContainer">
-            <form onSubmit={_createNewChannel}>
+            <div className="container__modalCreateChannel__contentContainer__Header">
+              <span className="container__modalCreateChannel__contentContainer__Header__title">
+                Create a channel
+              </span>
+              <span>X</span>
+            </div>
+            <form
+              onSubmit={_createNewChannel}
+              className="container__modalCreateChannel__contentContainer__form"
+            >
               <input
                 placeholder="Nom du channel"
                 value={currentNewChannelName}
