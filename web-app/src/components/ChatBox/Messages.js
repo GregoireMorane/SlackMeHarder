@@ -6,6 +6,7 @@ function Messages(props) {
   const [messages, createMessage] = useMessages(props.match.params.id);
 
   const onSubmit = async e => {
+    // use an onChange() event and add a new state for de value
     e.preventDefault();
     const formData = new FormData(e.target);
     const content = formData.get('content')
@@ -20,9 +21,9 @@ function Messages(props) {
         ))}
       </div>
       <div className="container__chat__sendBox">
-        <form onSubmit={e => onSubmit(e)}>
-          <input placeholder="Envoyer un message" name="content"/>
-          <button type="submit">Envoyer</button>        
+        <form className="form__chat__sendbox" onSubmit={e => onSubmit(e)}>
+          <input className="input__chat__sendbox" placeholder="Envoyer un message" name="content"/>
+          <button className="button__chat__sendbox" type="submit">Envoyer</button>        
         </form>
       </div>
     </div>

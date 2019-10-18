@@ -6,9 +6,10 @@ export const useMessages = id => {
 
   const createMessage = async (content) => {
     const message = await postMessages(content, id);
-    addMessage(message);
+    await addMessage(message);
   }
 
+  // add message front view and run again the fetch to be sure that the message has been created
   const addMessage = (message) => {
     const messagesUpdated = [...messages, message]
     setMessages(messagesUpdated);
