@@ -34,6 +34,7 @@ export const useMessages = id => {
   }, [id]);
 
   socket.on('sendMessagesToclient', data => {
+    _fetchMessages(id);
     console.log('message from server', data);
   });
 
