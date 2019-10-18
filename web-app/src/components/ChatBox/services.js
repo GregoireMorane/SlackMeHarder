@@ -8,11 +8,13 @@ export const useMessages = id => {
   const socket = socketIOClient(endpoint);
 
   const [messages, setMessages] = useState([]);
+  const [contentValue, setContentValue] = useState('');
 
-  const createMessage = async content => {
-    socket.emit('getMessageFromClient', content);
-    const message = await postMessages(content, id);
-    addMessage(message);
+  const createMessage = async () => {
+    const message = await postMessages(contentValue, id);
+    await _fetchMessages(id);
+    // run again the fetch to be sure that the message has been created
+    await addMessage(message);
   };
 
   const addMessage = message => {
@@ -20,17 +22,13 @@ export const useMessages = id => {
     setMessages(messagesUpdated);
   };
 
-  useEffect(() => {
-    const _fetchMessages = async id => {
-      setMessages(await fetchMessages(id));
-    };
+  const _fetchMessages = async id => {
+    setMessages(await fetchMessages(id));
+  };
 
+  useEffect(() => {
     _fetchMessages(id);
   }, [id]);
 
-  socket.on('sendMessagesToclient', data => {
-    console.log('message from server', data);
-  });
-
-  return [messages, createMessage, addMessage];
+  return [messages, createMessage, contentValue, setContentValue];
 };

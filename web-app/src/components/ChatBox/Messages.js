@@ -3,13 +3,18 @@ import { useMessages } from './services';
 import './styles.css';
 
 function Messages(props) {
-  const [messages, createMessage] = useMessages(props.match.params.id);
+  const [messages, createMessage, contentValue, setContentValue] = useMessages(
+    props.match.params.id
+  );
 
-  const onSubmit = async e => {
+  const _createNewMessage = async e => {
     e.preventDefault();
-    const formData = new FormData(e.target);
-    const content = formData.get('content');
-    await createMessage(content);
+    await createMessage();
+    setContentValue('');
+  };
+
+  const _setCurrentMessageContent = e => {
+    setContentValue(e.target.value);
   };
 
   return (
@@ -19,9 +24,16 @@ function Messages(props) {
           messages.map(message => <p key={message.id}>{message.content}</p>)}
       </div>
       <div className="container__chat__sendBox">
-        <form onSubmit={e => onSubmit(e)}>
-          <input placeholder="Envoyer un message" name="content" />
-          <button type="submit">Envoyer</button>
+        <form className="form__chat__sendbox" onSubmit={_createNewMessage}>
+          <input
+            className="input__chat__sendbox"
+            placeholder="Envoyer un message"
+            value={contentValue}
+            onChange={_setCurrentMessageContent}
+          />
+          <button className="button__chat__sendbox" type="submit">
+            Envoyer
+          </button>
         </form>
       </div>
     </div>

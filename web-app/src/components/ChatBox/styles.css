@@ -12,5 +12,27 @@
 
 .container__chat__sendBox {
   flex: 1;
-  background-color: cyan;
+}
+
+.form__chat__sendbox {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 10px;
+  
+}
+
+.input__chat__sendbox {
+  border: 1px solid grey;
+  border-right: none;
+  padding: 10px;
+  width: 100%;
+}
+
+.button__chat__sendbox {
+  padding: 10px;
+  border: 1px solid #2f3e4d;
+  background-color: #2f3e4d;
+  color: white;
+  font-weight: bold;
 }
