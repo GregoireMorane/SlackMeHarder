@@ -3,25 +3,27 @@ import { fetchMessages, postMessages } from '../../data/services/api';
 
 export const useMessages = id => {
   const [messages, setMessages] = useState([]);
+  const [contentValue, setContentValue] = useState('');
 
-  const createMessage = async (content) => {
-    const message = await postMessages(content, id);
+  const createMessage = async () => {
+    const message = await postMessages(contentValue, id);
+    await _fetchMessages(id);
+    // run again the fetch to be sure that the message has been created
     await addMessage(message);
-  }
+  };
 
-  // add message front view and run again the fetch to be sure that the message has been created
-  const addMessage = (message) => {
-    const messagesUpdated = [...messages, message]
+  const addMessage = message => {
+    const messagesUpdated = [...messages, message];
     setMessages(messagesUpdated);
-  }
+  };
+
+  const _fetchMessages = async id => {
+    setMessages(await fetchMessages(id));
+  };
 
   useEffect(() => {
-    const _fetchMessages = async id => {
-      setMessages(await fetchMessages(id));
-    };
-
     _fetchMessages(id);
   }, [id]);
 
-  return [messages, createMessage, addMessage];
+  return [messages, createMessage, contentValue, setContentValue];
 };
