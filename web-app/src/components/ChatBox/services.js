@@ -12,6 +12,11 @@ export const useMessages = id => {
 
   const createMessage = async () => {
     const message = await postMessages(contentValue, id);
+
+    socket.emit('getMessageFromClient', contentValue);
+    socket.on('sendMessagesToclient', data => {
+      console.log('message from server', data);
+    });
     await _fetchMessages(id);
     // run again the fetch to be sure that the message has been created
     await addMessage(message);

@@ -40,7 +40,7 @@ function Home() {
         <ul className="container__channels__list">
           {channels.map(channel => (
             <Link
-              key={channel.name}
+              key={channel.id}
               to={`/channel/${channel.id}`}
               className="container__channels__list__element"
             >
