@@ -1,10 +1,11 @@
 const express = require('express');
-const socketIO = require('socket.io');
 const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+
+const webSocket = require('./api/webSocket');
 
 const routerChannels = require('./api/routes/channels');
 const routerMessages = require('./api/routes/messages');
@@ -21,20 +22,15 @@ app.use(
   })
 );
 
-app.use('/api/channels', routerChannels);
-app.use('/api/messages', routerMessages);
-
 const server = http.createServer(app);
-const io = socketIO(server);
+const socket = webSocket.getWebSocket(server);
+app.use(webSocket.useSocket(socket));
 
-app.io = io;
-io.on('connection', socket => {
+socket.on('connection', socket => {
   console.log('user connected');
 
-  socket.on('getMessageFromClient', data => {
-    io.emit('sendMessagesToclient', data);
-    console.log('message : ', data);
-  });
+  app.use('/api/channels', routerChannels);
+  app.use('/api/messages', routerMessages);
 
   socket.on('disconnect', function() {
     console.log('user disconnected');

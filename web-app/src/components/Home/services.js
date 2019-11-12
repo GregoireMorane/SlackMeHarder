@@ -6,11 +6,6 @@ import { fetchChannels, createChannel } from '../../data/services/api';
 export const useChannels = () => {
   const [channels, setChannels] = useState([]);
 
-  // const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
-  // const socket = socketIOClient(endpoint);
-
-  // socket.emit('connection');
-
   const [
     shouldPromptModalCreateChannel,
     setShouldPromptModalCreateChannel,

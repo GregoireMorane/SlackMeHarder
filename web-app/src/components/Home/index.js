@@ -59,7 +59,12 @@ function Home() {
               <span className="container__modalCreateChannel__contentContainer__Header__title">
                 Create a channel
               </span>
-              <span>X</span>
+              <button
+                onClick={sShouldPromptModalCreateChannel}
+                className="container__channels__button"
+              >
+                <span className="container__channels__button__icon">X</span>
+              </button>
             </div>
             <form
               onSubmit={_createNewChannel}
