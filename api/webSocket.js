@@ -14,8 +14,13 @@ const notifyClientOfNewMessage = (socket, message) => {
   console.log('message : ', message);
 };
 
+const notifyClienOfNewChannel = (socket, channel) => {
+  socket.emit('sendChannelToClient', channel);
+};
+
 module.exports = {
   getWebSocket,
   useSocket,
   notifyClientOfNewMessage,
+  notifyClienOfNewChannel,
 };
