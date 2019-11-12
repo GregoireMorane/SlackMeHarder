@@ -2,12 +2,14 @@
   display: flex;
   flex-direction: column;
   flex: 9;
+  height: 100vh;
 }
 
 .container__chat__messages {
   flex: 9;
   background-color: #191d20;
   color: white;
+  overflow: auto;
 }
 
 .container__chat__sendBox {
@@ -19,7 +21,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 20px 10px;
-  
 }
 
 .input__chat__sendbox {

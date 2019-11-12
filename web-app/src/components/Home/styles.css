@@ -10,6 +10,8 @@
   flex: 2;
   background-color: #2f3e4d;
   text-align: left;
+  height: 100vh;
+  overflow: auto;
 }
 
 .container__channels__containerTitle {
@@ -100,4 +102,19 @@
 }
 
 .container__modalCreateChannel__contentContainer__form {
+}
+
+.container__modalCreateChannel__contentContainer__form__input {
+  border: 1px solid grey;
+  border-right: none;
+  padding: 10px;
+  width: 100%;
+}
+
+.container__modalCreateChannel__contentContainer__form__btn {
+  padding: 10px;
+  border: 1px solid #2f3e4d;
+  background-color: #2f3e4d;
+  color: white;
+  font-weight: bold;
 }

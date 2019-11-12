@@ -69,8 +69,14 @@ function Home() {
                 placeholder="Nom du channel"
                 value={currentNewChannelName}
                 onChange={_setCurrentNewChannelName}
+                className="container__modalCreateChannel__contentContainer__form__input"
               />
-              <button type="submit">Valider</button>
+              <button
+                className="container__modalCreateChannel__contentContainer__form__btn"
+                type="submit"
+              >
+                Valider
+              </button>
             </form>
           </div>
         </div>
