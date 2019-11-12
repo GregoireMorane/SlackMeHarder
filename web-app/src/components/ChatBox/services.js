@@ -29,15 +29,18 @@ export const useMessages = id => {
     setMessages(await fetchMessages(id));
   };
 
+  const _getLiveMessages = () => {
+    console.log('before on');
+    socket.on('sendMessagesToclient', () => {
+      _fetchMessages(id);
+      // console.log('message from serv', data);
+    });
+  };
+
   useEffect(() => {
     _fetchMessages(id);
+    _getLiveMessages();
   }, [id]);
-
-  console.log('before on');
-  socket.on('sendMessagesToclient', data => {
-    // _fetchMessages(id);
-    console.log('message from serv', data);
-  });
 
   return [messages, createMessage, contentValue, setContentValue];
 };
