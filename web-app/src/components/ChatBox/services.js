@@ -16,12 +16,8 @@ export const useMessages = id => {
   const createMessage = async () => {
     const message = await postMessages(contentValue, channelId);
 
-    // socket.emit('getMessageFromClient', contentValue);
-
     await _fetchMessages(channelId);
-    // run again the fetch to be sure that the message has been created
     await addMessage(message);
-    scrollToBottomOfElement('.container__chat__messages');
   };
 
   const addMessage = message => {
