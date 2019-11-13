@@ -35,7 +35,6 @@ export const useMessages = id => {
   };
 
   const _getLiveMessages = (socket, channelId) => {
-    console.log('getLiveMessage');
     socket.on('sendMessageToClient', data => {
       _fetchMessages(channelId);
       console.log('socket on');

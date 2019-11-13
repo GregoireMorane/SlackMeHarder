@@ -1,8 +1,10 @@
 const dataLayer = require('../data-layer');
+const webSocket = require('../webSocket');
 
 const createChannel = async (req, res) => {
   const name = req.body.name;
   await dataLayer.createChannel(name);
+  webSocket.notifyClienOfNewChannel(req.socket, name);
   res.send(201, name);
 };
 
