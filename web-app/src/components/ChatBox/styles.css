@@ -12,6 +12,10 @@
   overflow: auto;
 }
 
+.chat__messages {
+  border: 1px solid red;
+}
+
 .container__chat__sendBox {
   flex: 1;
 }

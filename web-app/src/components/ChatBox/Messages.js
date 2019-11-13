@@ -21,7 +21,12 @@ function Messages(props) {
     <div className="container__chat">
       <div className="container__chat__messages">
         {messages &&
-          messages.map(message => <p key={message.id}>{message.content}</p>)}
+          messages.map(message => (
+            <div className="container__message">
+              <p className="username__message">Username</p>
+              <p key={message.id}>{message.content}</p>
+            </div>
+          ))}
       </div>
       <div className="container__chat__sendBox">
         <form className="form__chat__sendbox" onSubmit={_createNewMessage}>
