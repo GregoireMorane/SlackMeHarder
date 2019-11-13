@@ -3,12 +3,16 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
+const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
 const webSocket = require('./api/webSocket');
 
+const { setSessionId } = require('./api/utils/setSessionId');
+
 const routerChannels = require('./api/routes/channels');
 const routerMessages = require('./api/routes/messages');
+const routerAuth = require('./api/routes/auth');
 
 const port = process.env.PORT;
 
@@ -22,9 +26,14 @@ app.use(
   })
 );
 
+app.use(cookieParser());
+app.use(setSessionId);
+
 const server = http.createServer(app);
 const socket = webSocket.getWebSocket(server);
 app.use(webSocket.useSocket(socket));
+
+app.use('/api/auth', routerAuth);
 
 socket.on('connection', socket => {
   console.log('user connected');
