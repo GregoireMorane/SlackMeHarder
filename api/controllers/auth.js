@@ -4,6 +4,7 @@ const signup = async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const user = await dataLayer.findUserByUsername(username);
+  console.log('user', user);
   if (user) {
     res.send(409, 'Username already taken');
   } else {

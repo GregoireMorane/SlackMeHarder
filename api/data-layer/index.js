@@ -67,7 +67,7 @@ const findUserByUsername = async username => {
       `SELECT * from app_user WHERE username = $1`,
       [username]
     );
-    return queryResult;
+    return queryResult.rows[0];
   } catch (error) {
     console.log('error: ', error);
   }
@@ -96,6 +96,18 @@ const createSession = async (sessionId, user_id) => {
   }
 };
 
+const findSessionById = async sessionId => {
+  try {
+    const session = await pool.query(
+      `SELECT * FROM user_session WHERE sessionId=$1`,
+      [sessionId]
+    );
+    return session.rows[0];
+  } catch (error) {
+    console.log('error', error);
+  }
+};
+
 module.exports = {
   createChannel,
   getChannels,
@@ -105,4 +117,5 @@ module.exports = {
   findUserByUsername,
   verifyUser,
   createSession,
+  findSessionById,
 };

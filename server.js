@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
+const { findSessionById } = require('./api/data-layer');
 
 const webSocket = require('./api/webSocket');
 
@@ -29,11 +30,25 @@ app.use(
 app.use(cookieParser());
 app.use(setSessionId);
 
+const authChecker = async (req, res, next) => {
+  console.log(req.cookies.sessionId);
+  const session = await findSessionById(req.cookies.sessionId);
+  console.log('session', session);
+  if (session && session.user_id) {
+    console.log('user exists');
+  } else {
+    console.log('user or session does not exists');
+  }
+  next();
+};
+
 const server = http.createServer(app);
 const socket = webSocket.getWebSocket(server);
 app.use(webSocket.useSocket(socket));
 
 app.use('/api/auth', routerAuth);
+
+app.use(authChecker);
 
 socket.on('connection', socket => {
   console.log('user connected');
