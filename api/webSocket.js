@@ -11,11 +11,14 @@ const useSocket = socket => (req, res, next) => {
 
 const notifyClientOfNewMessage = (socket, message) => {
   socket.emit('sendMessageToClient', message);
-  console.log('message : ', message);
 };
 
 const notifyClienOfNewChannel = (socket, channel) => {
   socket.emit('sendChannelToClient', channel);
+};
+
+const notifyClientToTriggerAuth = socket => {
+  socket.emit('shouldTriggerAuth');
 };
 
 module.exports = {
@@ -23,4 +26,5 @@ module.exports = {
   useSocket,
   notifyClientOfNewMessage,
   notifyClienOfNewChannel,
+  notifyClientToTriggerAuth,
 };

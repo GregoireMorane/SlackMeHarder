@@ -96,6 +96,17 @@ const createSession = async (sessionId, user_id) => {
   }
 };
 
+const updateSession = async (sessionId, user_id) => {
+  try {
+    await pool.query(
+      `UPDATE user_session SET user_id = $1 WHERE sessionId = $2`,
+      [user_id, sessionId]
+    );
+  } catch (error) {
+    console.log('error: ', error);
+  }
+};
+
 const findSessionById = async sessionId => {
   try {
     const session = await pool.query(
@@ -118,4 +129,5 @@ module.exports = {
   verifyUser,
   createSession,
   findSessionById,
+  updateSession,
 };
