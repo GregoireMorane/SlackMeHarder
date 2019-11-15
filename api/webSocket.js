@@ -17,8 +17,8 @@ const notifyClienOfNewChannel = (socket, channel) => {
   socket.emit('sendChannelToClient', channel);
 };
 
-const notifyClientToTriggerAuth = socket => {
-  socket.emit('shouldTriggerAuth');
+const notifyClientToTriggerAuth = (socket, data) => {
+  socket.emit('shouldTriggerAuth', data);
 };
 
 module.exports = {

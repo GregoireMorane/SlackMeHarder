@@ -29,8 +29,7 @@ export const useChannels = () => {
 
   const _checkAuth = async socket => {
     socket.on('shouldTriggerAuth', data => {
-      console.log('shoudl trigger auth true');
-      setShouldTriggerAuth(true);
+      setShouldTriggerAuth(data);
     });
   };
 
