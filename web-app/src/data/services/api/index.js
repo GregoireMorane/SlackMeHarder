@@ -28,3 +28,15 @@ export const postMessages = async (content, channel_id) => {
   const message = response.data;
   return message;
 };
+
+// auth
+
+export const signIn = async (username, password) => {
+  const data = { username, password };
+  await axios.post(`/api/auth/signin`, data);
+};
+
+export const signUp = async (username, password) => {
+  const data = { username, password };
+  await axios.post(`/api/auth/signup`, data);
+};

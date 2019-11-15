@@ -15,14 +15,24 @@ export const useChannels = () => {
 
   const [currentNewChannelName, setCurrentNewChannelName] = useState('');
 
+  const [shouldTriggerAuth, setShouldTriggerAuth] = useState(false);
+
   useEffect(() => {
     const socket = socketIOClient(endpoint);
+    _checkAuth(socket);
     _fetchChannels();
     getLiveChannels(socket);
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [shouldTriggerAuth]);
+
+  const _checkAuth = async socket => {
+    socket.on('shouldTriggerAuth', data => {
+      console.log('shoudl trigger auth true');
+      setShouldTriggerAuth(true);
+    });
+  };
 
   const _fetchChannels = async () => {
     setChannels(await fetchChannels());
@@ -52,5 +62,7 @@ export const useChannels = () => {
     createNewChannel,
     currentNewChannelName,
     setCurrentNewChannelName,
+    shouldTriggerAuth,
+    setShouldTriggerAuth,
   ];
 };

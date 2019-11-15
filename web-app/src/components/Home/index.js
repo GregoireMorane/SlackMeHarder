@@ -2,11 +2,12 @@ import React from 'react';
 import { useChannels } from './services';
 import { Link } from 'react-router-dom';
 
+import AuthForm from '../AuthForm';
 import ChatBox from '../ChatBox';
 
 import './styles.css';
 
-function Home() {
+const Home = () => {
   const [
     channels,
     shouldPromptModalCreateChannel,
@@ -14,6 +15,8 @@ function Home() {
     createNewChannel,
     currentNewChannelName,
     setCurrentNewChannelName,
+    shouldTriggerAuth,
+    setShouldTriggerAuth,
   ] = useChannels();
 
   const _createNewChannel = e => {
@@ -24,6 +27,16 @@ function Home() {
   const _setCurrentNewChannelName = e => {
     setCurrentNewChannelName(e.target.value);
   };
+
+  if (shouldTriggerAuth === true) {
+    return (
+      <div className="container__modalCreateChannel">
+        <AuthForm setShouldTriggerAuth={setShouldTriggerAuth} />
+      </div>
+    );
+  }
+
+  console.log(shouldTriggerAuth);
 
   return (
     <div className="container">
@@ -88,6 +101,6 @@ function Home() {
       ) : null}
     </div>
   );
-}
+};
 
 export default Home;

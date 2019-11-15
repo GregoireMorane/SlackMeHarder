@@ -8,6 +8,8 @@ const signup = async (req, res) => {
     res.send(409, 'Username already taken');
   } else {
     await dataLayer.createUser(username, password);
+    const userCreated = await dataLayer.findUserByUsername(username);
+    await dataLayer.updateSession(req.cookies.sessionId, userCreated.id);
     res.send(201, username);
   }
 };

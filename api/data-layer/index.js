@@ -87,10 +87,11 @@ const verifyUser = async (username, password) => {
 
 const createSession = async (sessionId, user_id) => {
   try {
-    await pool.query(
+    const user = await pool.query(
       `INSERT INTO user_session (sessionId, user_id) VALUES ($1, $2)`,
       [sessionId, user_id]
     );
+    return user.rows[0];
   } catch (error) {
     console.log('error: ', error);
   }

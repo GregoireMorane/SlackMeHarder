@@ -6,7 +6,7 @@ import './styles.css';
 import Messages from './Messages';
 import NoChatBoxScreen from './NoChatBoxScreen';
 
-function ChatBox() {
+const ChatBox = () => {
   return (
     <div className="container__chat">
       <Switch>
@@ -15,6 +15,6 @@ function ChatBox() {
       </Switch>
     </div>
   );
-}
+};
 
 export default ChatBox;
