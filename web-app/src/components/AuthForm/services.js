@@ -10,7 +10,7 @@ export const useAuthForm = () => {
     try {
       shouldPromptSignInForm
         ? await signIn(username, password)
-        : signUp(username, password);
+        : await signUp(username, password);
       setShouldTriggerAuth(false);
     } catch (err) {
       console.log(err);

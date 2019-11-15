@@ -36,8 +36,6 @@ const Home = () => {
     );
   }
 
-  console.log(shouldTriggerAuth);
-
   return (
     <div className="container">
       <div className="container__channels">
