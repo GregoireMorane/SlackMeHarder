@@ -33,7 +33,6 @@ export const useMessages = id => {
   const _getLiveMessages = (socket, channelId) => {
     socket.on('sendMessageToClient', data => {
       _fetchMessages(channelId);
-      console.log('socket on');
       console.log('message from serv', data);
       scrollToBottomOfElement('.container__chat__messages');
     });

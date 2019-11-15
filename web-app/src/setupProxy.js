@@ -1,13 +1,15 @@
 const proxy = require('http-proxy-middleware');
-const PORT = process.env.PORT;
 
 module.exports = function(app) {
   app.use(
-    proxy('/api', { target: `http://localhost:${PORT}`, changeOrigin: true })
+    proxy('/api', {
+      target: `http://localhost:${process.env.REACT_APP_API_PORT}`,
+      changeOrigin: true,
+    })
   );
   app.use(
     proxy('/socket.io', {
-      target: `http://localhost:${PORT}`,
+      target: `http://localhost:${process.env.REACT_APP_API_PORT}`,
       ws: true,
     })
   );
