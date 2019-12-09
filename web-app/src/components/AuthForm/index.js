@@ -1,6 +1,8 @@
 import React from 'react';
 import { useAuthForm } from './services';
 
+import './styles.css';
+
 const AuthForm = props => {
   const [
     username,
@@ -13,12 +15,10 @@ const AuthForm = props => {
   ] = useAuthForm();
 
   const handleSetUsername = e => {
-    console.log(e);
     setUsername(e);
   };
 
   const handleSetPassword = e => {
-    console.log(e);
     setPassword(e);
   };
 
@@ -32,63 +32,63 @@ const AuthForm = props => {
   };
 
   return (
-    <div>
-      <h2>{shouldPromptSignInForm ? 'Sign In' : 'Sign Up'}</h2>
+    <div className="form__container">
+      <h2 className="form__title">
+        {shouldPromptSignInForm ? 'Connexion' : 'Inscription'}
+      </h2>
       {shouldPromptSignInForm ? (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Username :
-            <input
-              name="username"
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={e => handleSetUsername(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Password :
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={e => handleSetPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
+        <form onSubmit={handleSubmit} className="form__container__content">
+          <label>Nom d'utilisateur :</label>
+          <input
+            className="form__input"
+            name="username"
+            type="text"
+            placeholder="Nom d'utilisateur"
+            value={username}
+            onChange={e => handleSetUsername(e.target.value)}
+          />
+          <label>Mot de passe :</label>
+          <input
+            className="form__input"
+            name="password"
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={e => handleSetPassword(e.target.value)}
+          />
+          <button type="submit" className="btn__submit">
+            Connexion
+          </button>
         </form>
       ) : (
-        <form onSubmit={handleSubmit}>
-          <label>
-            Username :
-            <input
-              name="username"
-              type="text"
-              placeholder="Username"
-              value={username}
-              onChange={e => handleSetUsername(e.target.value)}
-            />
-          </label>
-          <br />
-          <label>
-            Password :
-            <input
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={e => handleSetPassword(e.target.value)}
-            />
-          </label>
-          <br />
-          <button type="submit">Submit</button>
+        <form onSubmit={handleSubmit} className="form__container__content">
+          <label>Choisissez un nom d'utilisateur :</label>
+          <input
+            className="form__input"
+            name="username"
+            type="text"
+            placeholder="Nom d'utilisateur"
+            value={username}
+            onChange={e => handleSetUsername(e.target.value)}
+          />
+          <label>Choisissez un mot de passe :</label>
+          <input
+            className="form__input"
+            name="password"
+            type="password"
+            placeholder="Mot de passe"
+            value={password}
+            onChange={e => handleSetPassword(e.target.value)}
+          />
+          <button type="submit" className="btn__submit">
+            Inscription
+          </button>
         </form>
       )}
-      <button onClick={switchForm}>
-        switch to {shouldPromptSignInForm ? 'signup' : 'signin'}
+      <button onClick={switchForm} className="btn__switch">
+        {shouldPromptSignInForm
+          ? 'Pas encore de compte ? Inscrivez-vous ! '
+          : 'Vous avez déjà un compte ? Connectez-vous !'}
       </button>
     </div>
   );
