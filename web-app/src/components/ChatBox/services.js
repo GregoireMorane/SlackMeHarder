@@ -17,12 +17,6 @@ export const useMessages = id => {
     const message = await postMessages(contentValue, channelId);
 
     await _fetchMessages(channelId);
-    await addMessage(message);
-  };
-
-  const addMessage = message => {
-    const messagesUpdated = [...messages, message];
-    setMessages(messagesUpdated);
   };
 
   const _fetchMessages = async channelId => {

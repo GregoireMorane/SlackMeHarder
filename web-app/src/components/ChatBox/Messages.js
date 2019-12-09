@@ -23,7 +23,7 @@ function Messages(props) {
         {messages &&
           messages.map(message => (
             <div className="container__message" key={message.id}>
-              <p className="username__message">Username</p>
+              <p className="username__message">{message.username}</p>
               <p>{message.content}</p>
             </div>
           ))}
