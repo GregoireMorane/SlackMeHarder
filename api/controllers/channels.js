@@ -16,7 +16,16 @@ const getChannels = async (req, res) => {
 getMessageByChannel = async (req, res) => {
   const id = req.params.id;
   const messagesList = await dataLayer.getMessageByChannel(id);
-  res.send(200, messagesList);
+  const filteredList = messagesList.map(message => {
+    return {
+      id: message.id,
+      content: message.content,
+      created_at: message.created_at,
+      updated_at: message.updated_at,
+      username: message.username,
+    };
+  });
+  res.send(200, filteredList);
 };
 
 module.exports = {

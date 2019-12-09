@@ -41,7 +41,11 @@ const storeMessage = async (content, channelId, userId) => {
 const getMessageByChannel = async id => {
   try {
     const messagesList = await pool.query(
-      ` SELECT * from message WHERE channel_id = $1`,
+      `SELECT message.*, app_user.username
+      FROM message
+      LEFT JOIN app_user
+      ON message.app_user_id = app_user.id
+      WHERE message.channel_id = $1`,
       [id]
     );
     return messagesList.rows;
