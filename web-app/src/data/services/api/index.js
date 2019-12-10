@@ -40,3 +40,7 @@ export const signUp = async (username, password) => {
   const data = { username, password };
   await axios.post(`/api/auth/signup`, data);
 };
+
+export const whoAmI = async () => {
+  await axios.get(`/api/whoami`);
+};

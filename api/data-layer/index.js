@@ -77,6 +77,18 @@ const findUserByUsername = async username => {
   }
 };
 
+const findUserById = async id => {
+  try {
+    const queryResult = await pool.query(
+      `SELECT * from app_user WHERE id = $1`,
+      [id]
+    );
+    return queryResult.rows[0];
+  } catch (error) {
+    console.log('error: ', error);
+  }
+};
+
 const verifyUser = async (username, password) => {
   try {
     const queryResult = await pool.query(
@@ -131,6 +143,7 @@ module.exports = {
   getMessageByChannel,
   createUser,
   findUserByUsername,
+  findUserById,
   verifyUser,
   createSession,
   findSessionById,

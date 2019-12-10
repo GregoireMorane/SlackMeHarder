@@ -13,6 +13,7 @@ const { authChecker } = require('./api/utils/checkAuth');
 const routerChannels = require('./api/routes/channels');
 const routerMessages = require('./api/routes/messages');
 const routerAuth = require('./api/routes/auth');
+const routerWhoAmI = require('./api/routes/whoAmI');
 
 const port = process.env.PORT;
 
@@ -34,6 +35,7 @@ const io = webSocket.getWebSocket(server);
 app.use(webSocket.useSocket(io));
 
 app.use('/api/auth', routerAuth);
+app.use('/api/whoami', routerWhoAmI);
 
 io.on('connection', socket => {
   console.log('user connected');
