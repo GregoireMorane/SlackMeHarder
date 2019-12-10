@@ -18,6 +18,8 @@ const routerWhoAmI = require('./api/routes/whoAmI');
 const port = process.env.PORT;
 
 const app = express();
+const PATH_TO_WEB_APP_BUILD = 'web-app/build';
+app.use(express.static(path.join(__dirname, PATH_TO_WEB_APP_BUILD)));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -47,6 +49,10 @@ io.on('connection', socket => {
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
+});
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, PATH_TO_WEB_APP_BUILD, 'index.html'));
 });
 
 server.listen(port, '0.0.0.0', function() {
