@@ -17,13 +17,25 @@ function Messages(props) {
     setContentValue(e.target.value);
   };
 
+  const displayUsername = (index, message) => {
+    if (index >= 0) {
+      return messages[index].username &&
+        messages[index].username === message.username
+        ? false
+        : true;
+    }
+    return true;
+  };
+
   return (
     <div className="container__chat">
       <div className="container__chat__messages">
         {messages &&
-          messages.map(message => (
+          messages.map((message, index) => (
             <div className="container__message" key={message.id}>
-              <p className="username__message">{message.username}</p>
+              {displayUsername(index - 1, message) && (
+                <p className="username__message">{message.username}</p>
+              )}
               <p>{message.content}</p>
             </div>
           ))}
