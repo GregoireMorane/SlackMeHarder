@@ -42,15 +42,17 @@ io.on('connection', socket => {
   app.use('/api/channels', routerChannels);
   app.use('/api/messages', routerMessages);
 
-  app.use(express.static(path.join(__dirname, 'web-app', 'build')));
-  app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
-  });
-
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
 });
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, 'web-app', 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
+  });
+}
 
 const port = process.env.PORT;
 
