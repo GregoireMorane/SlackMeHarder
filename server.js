@@ -15,11 +15,7 @@ const routerMessages = require('./api/routes/messages');
 const routerAuth = require('./api/routes/auth');
 const routerWhoAmI = require('./api/routes/whoAmI');
 
-const port = process.env.PORT;
-
 const app = express();
-const PATH_TO_WEB_APP_BUILD = 'web-app/build';
-app.use(express.static(path.join(__dirname, PATH_TO_WEB_APP_BUILD)));
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -33,7 +29,7 @@ app.use(cookieParser());
 app.use(setSessionId);
 
 const server = http.createServer(app);
-const io = webSocket.getWebSocket(server);
+const io = require('socket.io').listen(server);
 app.use(webSocket.useSocket(io));
 
 app.use('/api/auth', routerAuth);
@@ -46,14 +42,17 @@ io.on('connection', socket => {
   app.use('/api/channels', routerChannels);
   app.use('/api/messages', routerMessages);
 
+  app.use(express.static(path.join(__dirname, 'web-app', 'build')));
+  app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
+  });
+
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
 });
 
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, PATH_TO_WEB_APP_BUILD, 'index.html'));
-});
+const port = process.env.PORT;
 
 server.listen(port, '0.0.0.0', function() {
   console.log(`Example app listening on port ${port}!`);
