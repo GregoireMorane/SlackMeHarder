@@ -1,5 +1,9 @@
 import React from 'react';
 import { useMessages } from './services';
+import {
+  isUsernameAndHourNeedToBeDisplayed,
+  formatHour,
+} from '../../utils/displayUsernameAndHour';
 import './styles.css';
 
 function Messages(props) {
@@ -21,10 +25,19 @@ function Messages(props) {
     <div className="container__chat">
       <div className="container__chat__messages">
         {messages &&
-          messages.map(message => (
+          messages.map((message, index) => (
             <div className="container__message" key={message.id}>
-              <p className="username__message">{message.username}</p>
-              <p>{message.content}</p>
+              {isUsernameAndHourNeedToBeDisplayed(
+                index - 1,
+                message,
+                messages
+              ) && (
+                <div className="username__message">
+                  <p className="username">{message.username}</p>
+                  <p className="hour">{formatHour(message.updated_at)}</p>
+                </div>
+              )}
+              <p className="content_message">{message.content}</p>
             </div>
           ))}
       </div>

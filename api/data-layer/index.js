@@ -45,7 +45,8 @@ const getMessageByChannel = async id => {
       FROM message
       LEFT JOIN app_user
       ON message.app_user_id = app_user.id
-      WHERE message.channel_id = $1`,
+      WHERE message.channel_id = $1
+      ORDER BY message.id`,
       [id]
     );
     return messagesList.rows;
