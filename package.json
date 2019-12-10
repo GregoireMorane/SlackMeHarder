@@ -8,7 +8,7 @@
     "start": "nodemon server.js",
     "migration:create": "npx db-migrate create",
     "migration:run": "npx db-migrate up",
-    "build": "npm install && npm run migration:run && cd web-app && npm run build"
+    "build": "npm install && npm run migration:run && cd web-app && npm install && npm run build"
   },
   "keywords": [],
   "author": "",
