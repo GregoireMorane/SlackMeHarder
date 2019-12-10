@@ -12,8 +12,29 @@
   overflow: auto;
 }
 
-.chat__messages {
-  border: 1px solid red;
+.container__message {
+  align-items: flex-start;
+  display: flex;
+  flex-direction: column;
+  margin: 15px;
+}
+
+.username__message {
+  align-items: center;
+  display: flex;
+  margin: 0;
+}
+
+.username {
+  font-weight: bold;
+}
+
+.hour {
+  margin-left: 5px;
+}
+
+.content_message {
+  margin: 0;
 }
 
 .container__chat__sendBox {
