@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 
-import { fetchChannels, createChannel } from '../../data/services/api';
+import { fetchChannels, createChannel, whoAmI } from '../../data/services/api';
 
 const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
 
@@ -16,10 +16,11 @@ export const useChannels = () => {
   const [currentNewChannelName, setCurrentNewChannelName] = useState('');
 
   const [shouldTriggerAuth, setShouldTriggerAuth] = useState(false);
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const socket = socketIOClient(endpoint);
-    _checkAuth(socket);
+    _checkAuth();
     _fetchChannels();
     getLiveChannels(socket);
     return () => {
@@ -27,10 +28,17 @@ export const useChannels = () => {
     };
   }, [shouldTriggerAuth]);
 
-  const _checkAuth = async socket => {
-    socket.on('shouldTriggerAuth', data => {
-      setShouldTriggerAuth(data);
-    });
+  const _checkAuth = async () => {
+    await whoAmI()
+      .then(function(response) {
+        setUser(response);
+        setShouldTriggerAuth(false);
+      })
+      .catch(function(error) {
+        if (error.response.status === 404) {
+          setShouldTriggerAuth(true);
+        }
+      });
   };
 
   const _fetchChannels = async () => {

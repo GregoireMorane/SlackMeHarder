@@ -49,17 +49,18 @@ const Home = () => {
           </button>
         </div>
         <ul className="container__channels__list">
-          {channels.map(channel => (
-            <Link
-              key={channel.id}
-              to={`/channel/${channel.id}`}
-              className="container__channels__list__element"
-            >
-              <li className="container__channels__list__label">
-                # {channel.name}
-              </li>
-            </Link>
-          ))}
+          {channels.length !== 0 &&
+            channels.map(channel => (
+              <Link
+                key={channel.id}
+                to={`/channel/${channel.id}`}
+                className="container__channels__list__element"
+              >
+                <li className="container__channels__list__label">
+                  # {channel.name}
+                </li>
+              </Link>
+            ))}
         </ul>
       </div>
       <ChatBox />

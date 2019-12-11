@@ -1,8 +1,8 @@
-const socketIO = require('socket.io');
+// const socketIO = require('socket.io');
 
-const getWebSocket = server => {
-  return socketIO(server);
-};
+// const getWebSocket = server => {
+//   return socketIO(server);
+// };
 
 const useSocket = socket => (req, res, next) => {
   req.socket = socket;
@@ -22,7 +22,7 @@ const notifyClientToTriggerAuth = (socket, data) => {
 };
 
 module.exports = {
-  getWebSocket,
+  // getWebSocket,
   useSocket,
   notifyClientOfNewMessage,
   notifyClienOfNewChannel,
