@@ -5,12 +5,12 @@ const signup = async (req, res) => {
   const password = req.body.password;
   const user = await dataLayer.findUserByUsername(username);
   if (user) {
-    res.send(409, 'Username already taken');
+    res.status(409).send('Username already taken');
   } else {
     await dataLayer.createUser(username, password);
     const userCreated = await dataLayer.findUserByUsername(username);
     await dataLayer.updateSession(req.cookies.sessionId, userCreated.id);
-    res.send(201, username);
+    res.status(201).send(username);
   }
 };
 
@@ -20,9 +20,9 @@ const signin = async (req, res) => {
   const user = await dataLayer.verifyUser(username, password);
   if (user) {
     await dataLayer.updateSession(req.cookies.sessionId, user.id);
-    res.send(201, 'connected');
+    res.status(201).send('connected');
   } else {
-    res.send(404, 'User not found');
+    res.status(404).send('User not found');
   }
 };
 

@@ -5,12 +5,12 @@ const createChannel = async (req, res) => {
   const name = req.body.name;
   await dataLayer.createChannel(name);
   webSocket.notifyClienOfNewChannel(req.socket, name);
-  res.send(201, name);
+  res.status(201).send(name);
 };
 
 const getChannels = async (req, res) => {
   const channelsList = await dataLayer.getChannels();
-  res.send(200, channelsList);
+  res.status(200).send(channelsList);
 };
 
 getMessageByChannel = async (req, res) => {
@@ -25,7 +25,7 @@ getMessageByChannel = async (req, res) => {
       username: message.username,
     };
   });
-  res.send(200, filteredList);
+  res.status(200).send(filteredList);
 };
 
 module.exports = {
