@@ -31,7 +31,9 @@ app.use(cookieParser());
 app.use(setSessionId);
 
 const server = http.createServer(app);
-const io = require('socket.io').listen(server);
+const io = require('socket.io').listen(server, {
+  pingTimeout: 60000,
+});
 app.use(webSocket.useSocket(io));
 
 app.use('/api/auth', routerAuth);
