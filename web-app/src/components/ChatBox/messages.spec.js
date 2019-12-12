@@ -10,17 +10,26 @@
 import React from 'react';
 import Messages from './Messages';
 import { shallow } from 'enzyme';
+import { useMessages } from './services';
 
 import * as apiServices from '../../data/services/api';
 
-describe('Message', () => {
-  describe('before messages are fetched', () => {
-    it('renders empty message list', () => {
-      const wrapper = shallow(<Messages />);
+const HookWrapper = (props) => {
+  const hook = props.hook ? props.hook() : undefined;
+  return <div hook={hook} />;
+}
 
-      expect(
-        wrapper.find('.container__chat__messages').children()
-      ).not.toHaveLength();
+describe('Message', () => {
+  // let wrapper = shallow(<HookWrapper hook={() => useMessages(1)} />);
+  let wrapper = shallow(
+    <Messages match={{params: {id: 1}}}/>
+  );
+
+
+  describe('before messages are fetched', () => {
+
+    it('renders empty messages list', () => {
+      expect(wrapper.contains(<div className='container__message'></div>)).toBe(false)
     });
   });
 
@@ -48,13 +57,9 @@ describe('Message', () => {
 
     apiServices.fetchMessages = jest.fn(() => Promise.resolve(messagesList));
 
-    it('renders messages', () => {
-      const wrapper = shallow(<Messages />);
-
+    it('renders messages list', () => {
       setImmediate(() => {
-        expect(
-          wrapper.find('.container__chat__messages').children()
-        ).toHaveLength();
+        expect(wrapper.contains(<div className='container__message'></div>)).toBe(true)
       });
     });
   });
