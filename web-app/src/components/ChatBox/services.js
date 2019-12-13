@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 
-import { scrollToBottomOfElement } from '../../utils/animations';
+// import { scrollToBottomOfElement } from '../../utils/animations';
 
 import { fetchMessages, postMessages } from '../../data/services/api';
 
 const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
 
 export const useMessages = id => {
+  console.log('useMessages');
   let channelId = id;
 
   const [messages, setMessages] = useState([]);
@@ -19,19 +20,21 @@ export const useMessages = id => {
   };
 
   const _fetchMessages = async channelId => {
+    console.log('_fetcheMessages');
     setMessages(await fetchMessages(channelId));
-    scrollToBottomOfElement('.container__chat__messages');
+    // scrollToBottomOfElement('.container__chat__messages');
   };
 
   const _getLiveMessages = (socket, channelId) => {
     socket.on('sendMessageToClient', data => {
       _fetchMessages(channelId);
       console.log('message from serv', data);
-      scrollToBottomOfElement('.container__chat__messages');
+      // scrollToBottomOfElement('.container__chat__messages');
     });
   };
 
   useEffect(() => {
+    console.log('useEffect');
     const socket = socketIOClient(endpoint);
     _fetchMessages(channelId);
     _getLiveMessages(socket, channelId);
@@ -40,5 +43,5 @@ export const useMessages = id => {
     };
   }, [id]);
 
-  return [messages, createMessage, contentValue, setContentValue];
+  return { messages, createMessage, contentValue, setContentValue };
 };
