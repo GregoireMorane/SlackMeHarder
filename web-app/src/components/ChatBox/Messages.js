@@ -7,9 +7,12 @@ import {
 import './styles.css';
 
 function Messages(props) {
-  const [messages, createMessage, contentValue, setContentValue] = useMessages(
-    props.match.params.id
-  );
+  const {
+    messages,
+    createMessage,
+    contentValue,
+    setContentValue,
+  } = useMessages(props.match.params.id);
 
   const _createNewMessage = async e => {
     e.preventDefault();

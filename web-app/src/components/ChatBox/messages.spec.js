@@ -1,3 +1,7 @@
+// jest.mock('../../data/services/api', () => ({
+//   fetchMessages: jest.fn(),
+// }));
+
 // Est-ce que le composant reçoit bien la liste des messages et l'affiche? oui
 // test si la valeur par défaut du state messages est correcte, si messages est vide [] avant le fetch et que rien ne s'affiche dans le composant oui
 // test si messages est rempli après le fetch et que le composant affiche bien un résultat oui
@@ -63,16 +67,14 @@ const addMessageToList = [
   },
 ];
 
+apiServices.fetchMessages = jest.fn();
+
 describe('Messages', () => {
   // apiServices.fetchMessages = jest.fn();
   // apiServices.fetchMessages = jest
   //   .fn()
   //   .mockImplementation(() => Promise.resolve(messagesList))
   //   .mockImplementation(() => Promise.resolve(addMessageToList));
-
-  // jest.mock('../../data/services/api', () => ({
-  //   fetchMessages: jest.fn(),
-  // }));
 
   // apiServices.fetchMessages = jest
   //   .fn()
@@ -91,12 +93,16 @@ describe('Messages', () => {
   });
 
   describe('after messages are fetched', () => {
-    beforeEach(() => {
-      apiServices.fetchMessages = jest.fn(() => {
-        Promise.resolve(messagesList);
-      });
-    });
+    // beforeEach(() => {
+    //   apiServices.fetchMessages = jest.fn(() => {
+    //     Promise.resolve(messagesList);
+    //   });
+    // });
     // apiServices.fetchMessages;
+    apiServices.fetchMessages.mockImplementationOnce(() =>
+      Promise.resolve(messagesList)
+    );
+    // .mockImplementationOnce(() => Promise.resolve(messagesList));
 
     it('renders messages list', () => {
       act(() => {
@@ -113,16 +119,20 @@ describe('Messages', () => {
   });
 
   describe('when user send a message by clicking on submit button', () => {
-    beforeEach(() => {
-      apiServices.fetchMessages = jest.fn(() => {
-        Promise.resolve(addMessageToList);
-      });
-    });
+    // beforeEach(() => {
+    //   apiServices.fetchMessages = jest.fn(() => {
+    //     Promise.resolve(addMessageToList);
+    //   });
+    // });
     // apiServices.fetchMessages = jest.fn(() =>
     //   Promise.resolve(addMessageToList)
     // );
     // apiServices.fetchMessages = second;
     // apiServices.fetchMessages;
+
+    apiServices.fetchMessages.mockImplementationOnce(() =>
+      Promise.resolve(addMessageToList)
+    );
 
     it('renders a new item in the messages list', () => {
       act(() => {
