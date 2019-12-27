@@ -5,8 +5,6 @@ import socketIOClient from 'socket.io-client';
 
 import { fetchMessages, postMessages } from '../../data/services/api';
 
-const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
-
 export const useMessages = id => {
   console.log('useMessages');
   let channelId = id;
@@ -35,7 +33,7 @@ export const useMessages = id => {
 
   useEffect(() => {
     console.log('useEffect');
-    const socket = socketIOClient(endpoint);
+    const socket = socketIOClient('');
     _fetchMessages(channelId);
     _getLiveMessages(socket, channelId);
     return () => {

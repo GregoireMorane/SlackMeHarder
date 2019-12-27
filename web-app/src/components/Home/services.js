@@ -3,8 +3,6 @@ import socketIOClient from 'socket.io-client';
 
 import { fetchChannels, createChannel, whoAmI } from '../../data/services/api';
 
-const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
-
 export const useChannels = () => {
   const [channels, setChannels] = useState([]);
 
@@ -19,7 +17,7 @@ export const useChannels = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const socket = socketIOClient(endpoint);
+    const socket = socketIOClient('');
     const checkAuthAndFetchChannels = async () => {
       await _checkAuth();
       _fetchChannels();
