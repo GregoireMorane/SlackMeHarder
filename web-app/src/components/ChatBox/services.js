@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 
-// import { scrollToBottomOfElement } from '../../utils/animations';
+import { scrollToBottomOfElement } from '../../utils/animations';
 
 import { fetchMessages, postMessages } from '../../data/services/api';
 
@@ -20,14 +20,14 @@ export const useMessages = id => {
   const _fetchMessages = async channelId => {
     console.log('_fetcheMessages');
     setMessages(await fetchMessages(channelId));
-    // scrollToBottomOfElement('.container__chat__messages');
+    scrollToBottomOfElement('.container__chat__messages');
   };
 
   const _getLiveMessages = (socket, channelId) => {
     socket.on('sendMessageToClient', data => {
       _fetchMessages(channelId);
       console.log('message from serv', data);
-      // scrollToBottomOfElement('.container__chat__messages');
+      scrollToBottomOfElement('.container__chat__messages');
     });
   };
 
