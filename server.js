@@ -18,6 +18,9 @@ const routerWhoAmI = require('./api/routes/whoAmI');
 const app = express();
 
 app.use(express.static(path.join(__dirname, 'web-app', 'build')));
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
+});
 
 app.use(cors());
 app.use(bodyParser.json());
@@ -31,9 +34,7 @@ app.use(cookieParser());
 app.use(setSessionId);
 
 const server = http.createServer(app);
-const io = require('socket.io').listen(server, {
-  pingTimeout: 60000,
-});
+const io = require('socket.io').listen(server);
 app.use(webSocket.useSocket(io));
 
 app.use('/api/auth', routerAuth);
@@ -51,9 +52,6 @@ io.on('connection', socket => {
   });
 });
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
-// });
 
 const port = process.env.PORT;
 
