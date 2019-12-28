@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import socketIOClient from 'socket.io-client';
+// import socketIOClient from 'socket.io-client';
 
 import { fetchChannels, createChannel, whoAmI } from '../../data/services/api';
 
@@ -17,16 +17,16 @@ export const useChannels = () => {
   const [user, setUser] = useState({});
 
   useEffect(() => {
-    const socket = socketIOClient('');
+    // const socket = socketIOClient('');
     const checkAuthAndFetchChannels = async () => {
       await _checkAuth();
       _fetchChannels();
     }
     checkAuthAndFetchChannels();
-    getLiveChannels(socket);
-    return () => {
-      socket.disconnect();
-    };
+    // getLiveChannels(socket);
+    // return () => {
+    //   socket.disconnect();
+    // };
   }, [shouldTriggerAuth]);
 
   const _checkAuth = async () => {

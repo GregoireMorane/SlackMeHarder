@@ -1,12 +1,12 @@
 const express = require('express');
-const http = require('http');
+// const http = require('http');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 require('dotenv').config({ path: path.join(__dirname, '.env') });
 
-const webSocket = require('./api/webSocket');
+// const webSocket = require('./api/webSocket');
 const { setSessionId } = require('./api/utils/setSessionId');
 const { authChecker } = require('./api/utils/checkAuth');
 
@@ -39,12 +39,12 @@ app.use(setSessionId);
 
 app.use('/api/auth', routerAuth);
 app.use('/api/whoami', routerWhoAmI);
+app.use(authChecker);
 app.use('/api/channels', routerChannels);
 app.use('/api/messages', routerMessages);
 
 // io.on('connection', socket => {
 //   console.log('user connected');
-//   app.use(authChecker);
 
 
 //   socket.on('disconnect', function() {
@@ -55,6 +55,6 @@ app.use('/api/messages', routerMessages);
 
 const port = process.env.PORT;
 
-server.listen(port, '0.0.0.0', function() {
+app.listen(port, '0.0.0.0', function() {
   console.log(`Example app listening on port ${port}!`);
 });
