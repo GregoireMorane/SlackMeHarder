@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-// import socketIOClient from 'socket.io-client';
+import socketIOClient from 'socket.io-client';
 
 import { scrollToBottomOfElement } from '../../utils/animations';
 
@@ -33,12 +33,12 @@ export const useMessages = id => {
 
   useEffect(() => {
     console.log('useEffect');
-    // const socket = socketIOClient('');
+    const socket = socketIOClient('');
     _fetchMessages(channelId);
-    // _getLiveMessages(socket, channelId);
-    // return () => {
-    //   socket.disconnect();
-    // };
+    _getLiveMessages(socket, channelId);
+    return () => {
+      socket.disconnect();
+    };
   }, [id]);
 
   return { messages, createMessage, contentValue, setContentValue };
