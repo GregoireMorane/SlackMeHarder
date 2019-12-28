@@ -17,10 +17,19 @@ const routerWhoAmI = require('./api/routes/whoAmI');
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'web-app', 'build')));
+// app.use(express.static(path.join(__dirname, 'web-app', 'build')));
+
 // app.get('/', (req, res) => {
 //   res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
 // });
+
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 app.use(cors());
 app.use(bodyParser.json());
