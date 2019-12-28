@@ -23,8 +23,8 @@ app.use(express.static(path.join(__dirname, 'web-app', 'build')));
 //   res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
 // });
 
-app.get('/*', function(req, res) {
-  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), function(err) {
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), (err) => {
     if (err) {
       res.status(500).send(err)
     }
