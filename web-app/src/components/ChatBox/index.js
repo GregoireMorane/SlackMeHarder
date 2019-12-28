@@ -11,7 +11,7 @@ const ChatBox = () => {
     <div className="container__chat">
       <Switch>
         <Route exact path="/" component={NoChatBoxScreen} />
-        <Route exact path="/channel/:id" component={Messages} />
+        <Route path="/channel/:id" component={Messages} />
       </Switch>
     </div>
   );
