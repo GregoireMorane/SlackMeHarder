@@ -23,14 +23,6 @@ app.use(express.static(path.join(__dirname, 'web-app', 'build')));
 //   res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
 // });
 
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), (err) => {
-    if (err) {
-      res.status(500).send(err)
-    }
-  })
-})
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(
@@ -61,6 +53,13 @@ app.use('/api/messages', routerMessages);
 //   });
 // });
 
+app.get('/*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), (err) => {
+    if (err) {
+      res.status(500).send(err)
+    }
+  })
+})
 
 const port = process.env.PORT;
 
