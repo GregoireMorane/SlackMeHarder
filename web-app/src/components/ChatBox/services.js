@@ -16,27 +16,32 @@ export const useMessages = (id, ref) => {
   };
 
   const _fetchMessages = async channelId => {
-    await setMessages(await fetchMessages(channelId));
-    scrollToBottom(ref);
+    setMessages(await fetchMessages(channelId));
   };
   
   const _getLiveMessages = (socket, channelId) => {
-    socket.on('sendMessageToClient', data => {
-      _fetchMessages(channelId);
+    socket.on('sendMessageToClient', async data => {
+      await _fetchMessages(channelId);
+      scrollToBottom(ref, true)
       console.log('message from serv', data);
     });
   };
 
-  const scrollToBottom = (refToScroll) => {
-    refToScroll.current.scrollIntoView({
+  const scrollToBottom = (refToScroll, isSmoothly) => {
+    const options = {
       behavior: 'smooth',
       block: 'start',
-    })
+    };
+    isSmoothly ? refToScroll.current.scrollIntoView(options) : refToScroll.current.scrollIntoView();
   }
 
   useEffect(() => {
     const socket = socketIOClient(endpoint);
-    _fetchMessages(channelId);
+    const _getMessagesAndScroll = async () => {
+      await _fetchMessages(channelId);
+      scrollToBottom(ref, false);
+    }
+    _getMessagesAndScroll()
     _getLiveMessages(socket, channelId);
     return () => {
       socket.disconnect();

@@ -21,7 +21,7 @@ function Messages(props) {
     e.preventDefault();
     await createMessage();
     setContentValue('');
-    await scrollToBottom(messagesListEnd);
+    await scrollToBottom(messagesListEnd, true);
   };
   
   const _setCurrentMessageContent = e => {
