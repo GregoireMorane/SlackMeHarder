@@ -7,23 +7,21 @@ import {
 import './styles.css';
 
 function Messages(props) {
-  const messageContainerRef = useRef(null);
+  const messagesListEnd = useRef();
 
   const {
     messages,
     createMessage,
     contentValue,
     setContentValue,
-  } = useMessages(props.match.params.id);
+    scrollToBottom,
+  } = useMessages(props.match.params.id, messagesListEnd);
   
-  const _createNewMessage = async (e, ref) => {
+  const _createNewMessage = async (e) => {
     e.preventDefault();
     await createMessage();
     setContentValue('');
-    await ref.current.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
+    await scrollToBottom(messagesListEnd);
   };
   
   const _setCurrentMessageContent = e => {
@@ -35,7 +33,7 @@ function Messages(props) {
       <div className="container__chat__messages">
         {messages &&
           messages.map((message, index) => (
-            <div ref={messageContainerRef} className="container__message" key={message.id}>
+            <div className="container__message" key={message.id}>
               {isUsernameAndHourNeedToBeDisplayed(
                 index - 1,
                 message,
@@ -49,9 +47,10 @@ function Messages(props) {
               <p className="content_message">{message.content}</p>
             </div>
           ))}
+        <div ref={messagesListEnd}></div>
       </div>
       <div className="container__chat__sendBox">
-        <form className="form__chat__sendbox" onSubmit={(e) => _createNewMessage(e, messageContainerRef)}>
+        <form className="form__chat__sendbox" onSubmit={_createNewMessage}>
           <input
             className="input__chat__sendbox"
             placeholder="Envoyer un message"

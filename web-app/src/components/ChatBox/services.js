@@ -5,7 +5,7 @@ import { fetchMessages, postMessages } from '../../data/services/api';
 
 const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
 
-export const useMessages = id => {
+export const useMessages = (id, ref) => {
   let channelId = id;
   const [messages, setMessages] = useState([]);
   const [contentValue, setContentValue] = useState('');
@@ -16,7 +16,8 @@ export const useMessages = id => {
   };
 
   const _fetchMessages = async channelId => {
-    setMessages(await fetchMessages(channelId));
+    await setMessages(await fetchMessages(channelId));
+    scrollToBottom(ref);
   };
   
   const _getLiveMessages = (socket, channelId) => {
@@ -25,6 +26,13 @@ export const useMessages = id => {
       console.log('message from serv', data);
     });
   };
+
+  const scrollToBottom = (refToScroll) => {
+    refToScroll.current.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    })
+  }
 
   useEffect(() => {
     const socket = socketIOClient(endpoint);
@@ -35,5 +43,5 @@ export const useMessages = id => {
     };
   }, [id]);
 
-  return { messages, createMessage, contentValue, setContentValue };
+  return { messages, createMessage, contentValue, setContentValue, scrollToBottom };
 };
