@@ -20,8 +20,11 @@ export const useChannels = () => {
 
   useEffect(() => {
     const socket = socketIOClient(endpoint);
-    _checkAuth();
-    _fetchChannels();
+    const checkAuthAndFetchChannels = async () => {
+      await _checkAuth();
+      _fetchChannels();
+    }
+    checkAuthAndFetchChannels();
     getLiveChannels(socket);
     return () => {
       socket.disconnect();
