@@ -42,17 +42,20 @@ app.use('/api/whoami', routerWhoAmI);
 io.on('connection', socket => {
   console.log('user connected');
   app.use(authChecker);
-
   app.use('/api/channels', routerChannels);
   app.use('/api/messages', routerMessages);
+
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), (err) => {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
 
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });
-});
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
 });
 
 const port = process.env.PORT;
