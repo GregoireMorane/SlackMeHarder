@@ -11,4 +11,12 @@ type Message = {
     created_at: Date;
     updated_at: Date;
     username: string;
+    userId: number;
+}
+
+type User = {
+    id: number;
+    username: string;
+    created_at: Date;
+    updated_at: Date;
 }
