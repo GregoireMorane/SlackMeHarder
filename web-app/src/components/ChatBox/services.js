@@ -3,8 +3,6 @@ import socketIOClient from 'socket.io-client';
 
 import { fetchMessages, postMessages } from '../../data/services/api';
 
-const endpoint = `${process.env.REACT_APP_API_BASE_URL}`;
-
 export const useMessages = (id, ref) => {
   let channelId = id;
   const [messages, setMessages] = useState([]);
@@ -36,7 +34,7 @@ export const useMessages = (id, ref) => {
   }
 
   useEffect(() => {
-    const socket = socketIOClient(endpoint);
+    const socket = socketIOClient('');
     const _getMessagesAndScroll = async () => {
       await _fetchMessages(channelId);
       scrollToBottom(ref, false);
