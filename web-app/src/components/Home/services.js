@@ -72,5 +72,6 @@ export const useChannels = () => {
     setCurrentNewChannelName,
     shouldTriggerAuth,
     setShouldTriggerAuth,
+    user,
   ];
 };
