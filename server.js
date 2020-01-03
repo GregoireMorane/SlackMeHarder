@@ -19,10 +19,6 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'web-app', 'build')));
 
-// app.get('/', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'));
-// });
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(
@@ -35,7 +31,9 @@ app.use(cookieParser());
 app.use(setSessionId);
 
 const server = http.createServer(app);
-const io = require('socket.io').listen(server);
+const io = require('socket.io').listen(server, {
+  pingTimeout: 60000,
+});
 app.use(webSocket.useSocket(io));
 
 app.use('/api/auth', routerAuth);
@@ -59,7 +57,6 @@ io.on('connection', socket => {
     console.log('user disconnected');
   });
 });
-
 
 const port = process.env.PORT;
 
