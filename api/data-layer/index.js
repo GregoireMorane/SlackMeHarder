@@ -55,6 +55,16 @@ const getMessageByChannel = async id => {
   }
 };
 
+const updateOneMessage = async (content, id) => {
+  try {
+    await pool.query(
+      `UPDATE message SET content = $1 WHERE id = $2`, [content, id]
+    );
+  } catch(error) {
+    console.log('error:', error);
+  }
+}
+
 const createUser = async (username, password) => {
   try {
     await pool.query(
@@ -149,4 +159,5 @@ module.exports = {
   createSession,
   findSessionById,
   updateSession,
+  updateOneMessage,
 };
