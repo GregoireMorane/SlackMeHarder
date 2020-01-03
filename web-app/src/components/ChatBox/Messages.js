@@ -8,13 +8,20 @@ import './styles.css';
 
 function Messages(props) {
   const messagesListEnd = useRef();
-
   const {
     messages,
     createMessage,
     contentValue,
     setContentValue,
     scrollToBottom,
+    updateMessage,
+    isEditMode,
+    setIsEditMode,
+    messageIdToUpdate,
+    setMessageIdToUpdate,
+    user,
+    updateContentValue,
+    setUpdateContentValue,
   } = useMessages(props.match.params.id, messagesListEnd);
   
   const _createNewMessage = async (e) => {
@@ -23,10 +30,26 @@ function Messages(props) {
     setContentValue('');
     await scrollToBottom(messagesListEnd, true);
   };
+
+  const getEditMode = (message) => {
+    setUpdateContentValue(message.content);
+    setIsEditMode(true);
+    setMessageIdToUpdate(message.id);
+  }
+  
+  const _updateMyMessage = async (message, e) => {
+    e.preventDefault();
+    await updateMessage(message)
+    setIsEditMode(false);    
+  }
   
   const _setCurrentMessageContent = e => {
     setContentValue(e.target.value);
   };
+
+  const _setUpdateContentValue = e => {
+    setUpdateContentValue(e.target.value)
+  }
   
   return (
     <div className="container__chat">
@@ -44,7 +67,25 @@ function Messages(props) {
                   <p className="hour">{formatHour(message.updated_at)}</p>
                 </div>
               )}
-              <p className="content_message">{message.content}</p>
+
+              {user && user.id === message.userId && isEditMode && messageIdToUpdate === message.id ? (
+                <form onSubmit={(e) => _updateMyMessage(message, e)}>
+                  <input 
+                    className=""
+                    value={updateContentValue}
+                    onChange={_setUpdateContentValue}
+                  />
+                  <button type="submit">Ok</button>
+                </form>
+              ) : (
+                <p className="content_message">{message.content}</p>
+              )}
+
+              {user && user.id === message.userId && 
+                <div className="update__delete__container">
+                  <button className="update__message" onClick={() => getEditMode(message)}>Modifier</button>
+                </div>
+              }
             </div>
           ))}
         <div ref={messagesListEnd}></div>

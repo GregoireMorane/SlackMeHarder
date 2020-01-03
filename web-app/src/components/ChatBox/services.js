@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 
-import { fetchMessages, postMessages } from '../../data/services/api';
+import { 
+  fetchMessages,
+  postMessages,
+  putMessage,
+  whoAmI,
+} from '../../data/services/api';
 
 export const useMessages = (id, ref) => {
   let channelId = id;
   const [messages, setMessages] = useState([]);
   const [contentValue, setContentValue] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [messageIdToUpdate, setMessageIdToUpdate] = useState(null);
+  const [user, setUser] = useState(null);
+  const [updateContentValue, setUpdateContentValue] = useState('');
 
   const createMessage = async () => {
     await postMessages(contentValue, channelId);
@@ -33,18 +42,42 @@ export const useMessages = (id, ref) => {
     isSmoothly ? refToScroll.current.scrollIntoView(options) : refToScroll.current.scrollIntoView();
   }
 
+  const updateMessage = async (message) => {
+    await putMessage({...message, content: updateContentValue});
+  }
+
+  const _getUser = async () => {
+    const user = await whoAmI()
+    setUser(user);
+  }
+
   useEffect(() => {
-    const socket = socketIOClient('');
     const _getMessagesAndScroll = async () => {
       await _fetchMessages(channelId);
       scrollToBottom(ref, false);
     }
+    const socket = socketIOClient('');
     _getMessagesAndScroll()
     _getLiveMessages(socket, channelId);
+    _getUser();
     return () => {
       socket.disconnect();
     };
   }, [id]);
 
-  return { messages, createMessage, contentValue, setContentValue, scrollToBottom };
+  return { 
+    messages,
+    createMessage,
+    contentValue,
+    setContentValue,
+    scrollToBottom,
+    updateMessage,
+    isEditMode,
+    setIsEditMode,
+    messageIdToUpdate,
+    setMessageIdToUpdate,
+    user,
+    updateContentValue,
+    setUpdateContentValue,
+  };
 };

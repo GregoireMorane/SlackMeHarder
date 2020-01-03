@@ -37,6 +37,14 @@
   margin: 0;
 }
 
+.update__delete__container {
+  display: flex;
+}
+
+.update__message {
+  margin: 0;
+}
+
 .container__chat__sendBox {
   flex: 1;
 }
