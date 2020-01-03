@@ -38,7 +38,10 @@
   },
   "devDependencies": {
     "@testing-library/react": "^9.3.3",
+    "@types/react": "^16.9.17",
+    "@types/react-dom": "^16.9.4",
     "enzyme": "^3.10.0",
-    "enzyme-adapter-react-16": "^1.15.1"
+    "enzyme-adapter-react-16": "^1.15.1",
+    "typescript": "^3.7.4"
   }
 }

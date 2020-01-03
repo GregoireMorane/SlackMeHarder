@@ -17,6 +17,7 @@ const Home = () => {
     setCurrentNewChannelName,
     shouldTriggerAuth,
     setShouldTriggerAuth,
+    user,
   ] = useChannels();
 
   const _createNewChannel = e => {
@@ -39,6 +40,7 @@ const Home = () => {
   return (
     <div className="container">
       <div className="container__channels">
+        <p>Bonjour {user.username}, comment vas-tu aujourd'hui?</p>
         <div className="container__channels__containerTitle">
           <p className="container__channels__title">Channels</p>
           <button

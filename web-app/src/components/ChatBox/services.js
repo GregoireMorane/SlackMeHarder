@@ -1,16 +1,21 @@
 import { useState, useEffect } from 'react';
 import socketIOClient from 'socket.io-client';
 
-import { scrollToBottomOfElement } from '../../utils/animations';
+import { 
+  fetchMessages,
+  postMessages,
+  putMessage,
+  whoAmI,
+} from '../../data/services/api';
 
-import { fetchMessages, postMessages } from '../../data/services/api';
-
-export const useMessages = id => {
-  console.log('useMessages');
+export const useMessages = (id, ref) => {
   let channelId = id;
-
   const [messages, setMessages] = useState([]);
   const [contentValue, setContentValue] = useState('');
+  const [isEditMode, setIsEditMode] = useState(false);
+  const [messageIdToUpdate, setMessageIdToUpdate] = useState(null);
+  const [user, setUser] = useState(null);
+  const [updateContentValue, setUpdateContentValue] = useState('');
 
   const createMessage = async () => {
     await postMessages(contentValue, channelId);
@@ -18,28 +23,61 @@ export const useMessages = id => {
   };
 
   const _fetchMessages = async channelId => {
-    console.log('_fetcheMessages');
     setMessages(await fetchMessages(channelId));
-    scrollToBottomOfElement('.container__chat__messages');
   };
-
+  
   const _getLiveMessages = (socket, channelId) => {
-    socket.on('sendMessageToClient', data => {
-      _fetchMessages(channelId);
+    socket.on('sendMessageToClient', async data => {
+      await _fetchMessages(channelId);
+      scrollToBottom(ref, true)
       console.log('message from serv', data);
-      scrollToBottomOfElement('.container__chat__messages');
     });
   };
 
+  const scrollToBottom = (refToScroll, isSmoothly) => {
+    const options = {
+      behavior: 'smooth',
+      block: 'start',
+    };
+    isSmoothly ? refToScroll.current.scrollIntoView(options) : refToScroll.current.scrollIntoView();
+  }
+
+  const updateMessage = async (message) => {
+    await putMessage({...message, content: updateContentValue});
+  }
+
+  const _getUser = async () => {
+    const user = await whoAmI()
+    setUser(user);
+  }
+
   useEffect(() => {
-    console.log('useEffect');
+    const _getMessagesAndScroll = async () => {
+      await _fetchMessages(channelId);
+      scrollToBottom(ref, false);
+    }
     const socket = socketIOClient('');
-    _fetchMessages(channelId);
+    _getMessagesAndScroll()
     _getLiveMessages(socket, channelId);
+    _getUser();
     return () => {
       socket.disconnect();
     };
   }, [id]);
 
-  return { messages, createMessage, contentValue, setContentValue };
+  return { 
+    messages,
+    createMessage,
+    contentValue,
+    setContentValue,
+    scrollToBottom,
+    updateMessage,
+    isEditMode,
+    setIsEditMode,
+    messageIdToUpdate,
+    setMessageIdToUpdate,
+    user,
+    updateContentValue,
+    setUpdateContentValue,
+  };
 };

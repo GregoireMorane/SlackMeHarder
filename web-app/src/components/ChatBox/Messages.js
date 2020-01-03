@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { useMessages } from './services';
 import {
   isUsernameAndHourNeedToBeDisplayed,
@@ -7,23 +7,50 @@ import {
 import './styles.css';
 
 function Messages(props) {
+  const messagesListEnd = useRef();
   const {
     messages,
     createMessage,
     contentValue,
     setContentValue,
-  } = useMessages(props.match.params.id);
-
-  const _createNewMessage = async e => {
+    scrollToBottom,
+    updateMessage,
+    isEditMode,
+    setIsEditMode,
+    messageIdToUpdate,
+    setMessageIdToUpdate,
+    user,
+    updateContentValue,
+    setUpdateContentValue,
+  } = useMessages(props.match.params.id, messagesListEnd);
+  
+  const _createNewMessage = async (e) => {
     e.preventDefault();
     await createMessage();
     setContentValue('');
+    await scrollToBottom(messagesListEnd, true);
   };
 
+  const getEditMode = (message) => {
+    setUpdateContentValue(message.content);
+    setIsEditMode(true);
+    setMessageIdToUpdate(message.id);
+  }
+  
+  const _updateMyMessage = async (message, e) => {
+    e.preventDefault();
+    await updateMessage(message)
+    setIsEditMode(false);    
+  }
+  
   const _setCurrentMessageContent = e => {
     setContentValue(e.target.value);
   };
 
+  const _setUpdateContentValue = e => {
+    setUpdateContentValue(e.target.value)
+  }
+  
   return (
     <div className="container__chat">
       <div className="container__chat__messages">
@@ -40,9 +67,28 @@ function Messages(props) {
                   <p className="hour">{formatHour(message.updated_at)}</p>
                 </div>
               )}
-              <p className="content_message">{message.content}</p>
+
+              {user && user.id === message.userId && isEditMode && messageIdToUpdate === message.id ? (
+                <form onSubmit={(e) => _updateMyMessage(message, e)}>
+                  <input 
+                    className=""
+                    value={updateContentValue}
+                    onChange={_setUpdateContentValue}
+                  />
+                  <button type="submit">Ok</button>
+                </form>
+              ) : (
+                <p className="content_message">{message.content}</p>
+              )}
+
+              {user && user.id === message.userId && 
+                <div className="update__delete__container">
+                  <button className="update__message" onClick={() => getEditMode(message)}>Modifier</button>
+                </div>
+              }
             </div>
           ))}
+        <div ref={messagesListEnd}></div>
       </div>
       <div className="container__chat__sendBox">
         <form className="form__chat__sendbox" onSubmit={_createNewMessage}>

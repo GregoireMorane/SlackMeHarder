@@ -53,6 +53,14 @@ io.on('connection', socket => {
     })
   })
 
+  app.get('/*', (req, res) => {
+    res.sendFile(path.join(__dirname, 'web-app', 'build', 'index.html'), (err) => {
+      if (err) {
+        res.status(500).send(err)
+      }
+    })
+  })
+
   socket.on('disconnect', function() {
     console.log('user disconnected');
   });

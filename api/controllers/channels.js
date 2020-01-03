@@ -23,6 +23,7 @@ getMessageByChannel = async (req, res) => {
       created_at: message.created_at,
       updated_at: message.updated_at,
       username: message.username,
+      userId: message.app_user_id,
     };
   });
   res.status(200).send(filteredList);
