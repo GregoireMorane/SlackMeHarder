@@ -10,6 +10,7 @@
   background-color: #191d20;
   color: white;
   overflow: auto;
+  padding: 15px;
 }
 
 .container__message {
@@ -33,16 +34,46 @@
   margin-left: 5px;
 }
 
-.content_message {
+.content__options__message {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.content__message {
+  width: 100%;
+}
+
+.input__message {
+  background-color: #191d20;
+  color: white;
+  text-align: left;
+  width: 100%;
+  padding: 5px 0 5px 0;
+  font-size: 16px;
+}
+
+.text_message {
   margin: 0;
+  text-align: left;
+  font-size: 16px;
 }
 
 .update__delete__container {
   display: flex;
+  margin-left: 10px;
 }
 
 .update__message {
-  margin: 0;
+  height: 20px;
+  width: 20px;
+  margin-right: 10px;
+}
+
+.delete__message {
+  height: 20px;
+  width: 20px;
 }
 
 .container__chat__sendBox {

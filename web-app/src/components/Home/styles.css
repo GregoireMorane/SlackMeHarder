@@ -14,12 +14,19 @@
   overflow: auto;
 }
 
+.username__welcome__message {
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  padding: 0 15px;
+}
+
 .container__channels__containerTitle {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 15px;
+  padding: 0 15px;
 }
 
 .container__channels__title {

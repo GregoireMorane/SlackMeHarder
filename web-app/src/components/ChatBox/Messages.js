@@ -5,6 +5,9 @@ import {
   formatHour,
 } from '../../utils/displayUsernameAndHour';
 import './styles.css';
+import blueGreenPencil from './../../assets/icons/pencilBlueGreen.png';
+import greenCheck from './../../assets/icons/greenCheck.png';
+import redTrash from './../../assets/icons/redTrashIcon.png';
 
 function Messages(props) {
   const messagesListEnd = useRef();
@@ -32,16 +35,19 @@ function Messages(props) {
     await scrollToBottom(messagesListEnd, true);
   };
 
-  const getEditMode = (message) => {
+  const _updateMyMessage = async (message) => {
     setUpdateContentValue(message.content);
-    setIsEditMode(true);
+    setIsEditMode(!isEditMode);
     setMessageIdToUpdate(message.id);
-  }
-  
-  const _updateMyMessage = async (message, e) => {
-    e.preventDefault();
-    await updateMessage(message)
-    setIsEditMode(false);    
+
+    if(isEditMode && messageIdToUpdate !== message.id) {
+      setIsEditMode(true);
+    }
+
+    if(isEditMode && messageIdToUpdate === message.id) {
+      await updateMessage(message)
+      setIsEditMode(false);
+    }
   }
   
   const _setCurrentMessageContent = e => {
@@ -52,12 +58,17 @@ function Messages(props) {
     setUpdateContentValue(e.target.value)
   }
   
+  const getIcon = (messageId) => {
+    return isEditMode ? messageId === messageIdToUpdate ? greenCheck : blueGreenPencil : blueGreenPencil;
+  }
+
   return (
     <div className="container__chat">
       <div className="container__chat__messages">
         {messages &&
           messages.map((message, index) => (
             <div className="container__message" key={message.id}>
+
               {isUsernameAndHourNeedToBeDisplayed(
                 index - 1,
                 message,
@@ -68,26 +79,33 @@ function Messages(props) {
                   <p className="hour">{formatHour(message.updated_at)}</p>
                 </div>
               )}
-
-              {user && user.id === message.userId && isEditMode && messageIdToUpdate === message.id ? (
-                <form onSubmit={(e) => _updateMyMessage(message, e)}>
-                  <input 
-                    className=""
-                    value={updateContentValue}
-                    onChange={_setUpdateContentValue}
-                  />
-                  <button type="submit">Ok</button>
-                </form>
-              ) : (
-                <p className="content_message">{message.content}</p>
-              )}
-
-              {user && user.id === message.userId && 
-                <div className="update__delete__container">
-                  <button className="update__message" onClick={() => getEditMode(message)}>Modifier</button>
-                  <button className="delete__message" onClick={() => deleteMessage(message.id)}>Supprimer</button>
+              <div className="content__options__message">
+                <div className="content__message">
+                  {user && user.id === message.userId && isEditMode && messageIdToUpdate === message.id ? (
+                    <input className="input__message" value={updateContentValue} onChange={_setUpdateContentValue}/>
+                  ) : (
+                    <p className="text_message">{message.content}</p>
+                  )}
                 </div>
-              }
+
+                {user && user.id === message.userId && 
+                  <div className="update__delete__container">
+                    <input 
+                      className="update__message" 
+                      type="image"
+                      src={getIcon(message.id)}
+                      onClick={() => _updateMyMessage(message)}
+                    />
+                    <input
+                      className="delete__message"
+                      type="image"
+                      src={redTrash}
+                      onClick={() => deleteMessage(message.id)}
+                    />
+                  </div>
+                }
+              </div>
+
             </div>
           ))}
         <div ref={messagesListEnd}></div>
