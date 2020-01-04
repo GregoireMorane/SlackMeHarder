@@ -20,7 +20,7 @@ const updateMessage = async (req, res) => {
   
   if (userId === session.user_id) {
     await dataLayer.updateOneMessage(content, id);
-    webSocket.notifyClientOfNewMessage(req.socket, content);
+    webSocket.notifyClientMessageHasBeenUpdated(req.socket, content);
     res.status(201).send('a message has been updated');
   }
 }
