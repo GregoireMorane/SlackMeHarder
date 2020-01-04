@@ -9,6 +9,8 @@ const pool = new pg.Pool({
   connectionString: databaseUrl,
 });
 
+// CHANNELS
+
 const createChannel = async name => {
   try {
     await pool.query(`INSERT INTO channel (name) VALUES ($1)`, [name]);
@@ -25,6 +27,8 @@ const getChannels = async () => {
     console.log('error: ', error);
   }
 };
+
+// MESSAGES
 
 const storeMessage = async (content, channelId, userId) => {
   try {
@@ -55,6 +59,16 @@ const getMessageByChannel = async id => {
   }
 };
 
+const getOneMessage = async id => {
+  try {
+    await pool.query(
+      `SELECT * FROM message WHERE id = $1`, [id]
+    );
+  } catch(error) {
+    console.log('error', error);
+  }
+}
+
 const updateOneMessage = async (content, id) => {
   try {
     await pool.query(
@@ -64,6 +78,18 @@ const updateOneMessage = async (content, id) => {
     console.log('error:', error);
   }
 }
+
+const deleteOneMessage = async (id) => {
+  try {
+    await pool.query(
+      `DELETE FROM message WHERE id = $1`, [id]
+    );
+  } catch(error) {
+    console.log('error', error);
+  }
+}
+
+// USERS
 
 const createUser = async (username, password) => {
   try {
@@ -111,6 +137,8 @@ const verifyUser = async (username, password) => {
     console.log('error: ', error);
   }
 };
+
+// SESSIONS
 
 const createSession = async (sessionId, user_id) => {
   try {
@@ -160,4 +188,6 @@ module.exports = {
   findSessionById,
   updateSession,
   updateOneMessage,
+  deleteOneMessage,
+  getOneMessage,
 };

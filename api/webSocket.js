@@ -21,10 +21,15 @@ const notifyClientMessageHasBeenUpdated = (socket, message) => {
   socket.emit('messageHasBeenUpdated', message)
 }
 
+const notifyClientMessageHasBeenDeleted = (socket) => {
+  socket.emit('messageHasBeenDeleted');
+}
+
 module.exports = {
   // getWebSocket,
   useSocket,
   notifyClientOfNewMessage,
   notifyClienOfNewChannel,
   notifyClientMessageHasBeenUpdated,
+  notifyClientMessageHasBeenDeleted,
 };
