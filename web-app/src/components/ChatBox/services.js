@@ -30,8 +30,12 @@ export const useMessages = (id, ref) => {
     socket.on('sendMessageToClient', async data => {
       await _fetchMessages(channelId);
       scrollToBottom(ref, true)
-      console.log('message from serv', data);
+      console.log('message created from serv', data);
     });
+    socket.on('messageHasBeenUpdated', async data => {
+      await _fetchMessages(channelId);
+      console.log('message updated from serv', data);
+    })
   };
 
   const scrollToBottom = (refToScroll, isSmoothly) => {
