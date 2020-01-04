@@ -31,7 +31,7 @@ const deleteMessage = async (req, res) => {
   const session = await dataLayer.findSessionById(req.cookies.sessionId);
   const message = await dataLayer.getOneMessage(id);
 
-  if (message.user_id === session.user_id) {
+  if (message.app_user_id === session.user_id) {
     await dataLayer.deleteOneMessage(id);
     webSocket.notifyClientMessageHasBeenDeleted(req.socket);
     res.status(200).send('a message has been deleted');

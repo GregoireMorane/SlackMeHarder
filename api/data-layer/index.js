@@ -61,9 +61,11 @@ const getMessageByChannel = async id => {
 
 const getOneMessage = async id => {
   try {
-    await pool.query(
+    const message = await pool.query(
       `SELECT * FROM message WHERE id = $1`, [id]
     );
+    return message.rows[0];
+
   } catch(error) {
     console.log('error', error);
   }
