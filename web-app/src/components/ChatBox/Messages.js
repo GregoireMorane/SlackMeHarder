@@ -22,6 +22,7 @@ function Messages(props) {
     user,
     updateContentValue,
     setUpdateContentValue,
+    deleteMessage,
   } = useMessages(props.match.params.id, messagesListEnd);
   
   const _createNewMessage = async (e) => {
@@ -84,6 +85,7 @@ function Messages(props) {
               {user && user.id === message.userId && 
                 <div className="update__delete__container">
                   <button className="update__message" onClick={() => getEditMode(message)}>Modifier</button>
+                  <button className="delete__message" onClick={() => deleteMessage(message.id)}>Supprimer</button>
                 </div>
               }
             </div>

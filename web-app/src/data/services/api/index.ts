@@ -33,6 +33,10 @@ export const putMessage = async (message: any): Promise<void> => {
   await axios.put(`/api/messages/${message.id}`, {message});
 }
 
+export const deleteOneMessage = async (id: number): Promise<void> => {
+  await axios.delete(`/api/messages/${id}`);
+}
+
 // auth
 
 export const signIn = async (username: string, password: string): Promise<void> => {
