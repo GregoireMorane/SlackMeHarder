@@ -11,7 +11,7 @@
 ## dependencies
 
     api :
-    - npm i
+    - npm install
 
     web-app :
     - cd web-app && npm i
